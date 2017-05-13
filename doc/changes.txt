@@ -157,4 +157,4 @@ comitted, tagged pnt2_2_0, pntExt2_2_0
 ------------------------------
 Added classes/pnt to composer library metaclass-nl/phppeanuts-classes-pnt
 
-committed to git
+committed to git, tagged v2.2.0
