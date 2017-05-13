@@ -19,7 +19,7 @@ This library only contains the pnt classes. To use it install phppeanuts-skeleto
 	<ul>
 		<li>Scouting data and Tokens now support the usage of serveral phpPeanuts root folders (baseUrls) on the same (virtual) server
 		<li>tested with PHP 5.4.8
-		<LI>many small changes, see <A HREF="changes.txt">changes.txt</A> .
+		<LI>many small changes, see [changes.txt](doc/changes.txt).
 	</ul>
 </UL>
 
