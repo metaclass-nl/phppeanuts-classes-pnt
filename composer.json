@@ -1,0 +1,19 @@
+{
+    "name": "metaclass-nl/phppeanuts-classes-pnt",
+    "type": "library",
+    "description": "pnt classes of the phppeanuts framework",
+    "keywords": ["framework", "scaffolding", "prottotyping", "metaprogramming"],
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "MetaClass Groningen",
+            "homepage": "http://www.phppeanuts.org/"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.0"
+    },
+    "require-dev": {
+    }
+}
