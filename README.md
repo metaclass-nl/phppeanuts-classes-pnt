@@ -29,19 +29,10 @@ This library only contains the pnt classes. To use it install phppeanuts-skeleto
 <H3>Known bugs and limitations</H3>
 
 <OL>
+	<li>UTF-8 not supported
 	<li>Applications are only protected against cross frame scripting in browsers that support the X-Frame-Options header. 
 	<li>The Synchronizer Token Pattern by referrerer tokens is not as strong as by request tokens. (currently
 	most frameworks only implement this pattern for actions (called tickets with peanuts)). 
-	<li>With older versions of PHP and/or MySQL the character set can not be set on the connection in such a way that the 
-		quoting functions of MySQL take the character set into account (This is a limitation of PHP and MySql). 
-		This may be a problem with UTF-8 and it may 
-		have security implications, possibly including SQL injection vurnerabilities. To avoid this requires:<br>
-		- MySQL >= 5.0.7 or if you're using MySQL 4, then >= 4.1.13.<br>
-		- PntMySqlDao: PHP 5.0.7 or later<br>
-		- PntPdoDao: PHP 5.3.6 or later<br>
-		- PntMySqliDao (not included in the open source version): PHP 5.0.5 or later.
-		Emulated parameterized queries like used by PDO and PntMySqlDao will not protect you from this! (You may configure
-		PDO to use native parameterization)
 	<li>Though the framework has DAO classes that are successfully used as the database abstraction layer with MySQL
 	and SqLite, the use with other databases may require some additional refactoring. Please inform us about eventual
 	problems and solutions with the use of other databases. (Known: Oracle versions below 9 do not support standard
