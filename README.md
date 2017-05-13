@@ -1,13 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<HTML>
-
-<HEAD>
-	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
-	<TITLE>phpPeanuts release notes</TITLE>
-</HEAD>
-
-<BODY>
-
 <H2>Release notes</H2>
 <P>Version 2.2.0 for composer<BR>
 <BR>
@@ -61,8 +51,3 @@ This library only contains the pnt classes. To use it install phppeanuts-skeleto
 	of phpPeanuts available to any users outside your own organization, and allow them forward
 	it to the rest of the world. 
 </OL>
-
-
-</BODY>
-
-</HTML>
