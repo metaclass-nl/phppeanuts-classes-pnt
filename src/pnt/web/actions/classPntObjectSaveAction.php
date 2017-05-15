@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) MetaClass, 2003-2013
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -435,7 +435,7 @@ class PntObjectSaveAction extends PntAction {
 		reset($this->subActions);
 		forEach($this->subActions as $key => $subAction) {
 			if (!array_key_exists('id', $subAction->requestData)) 
-				continue; //ignore the extra item added for new item function
+				continue; //ignore the extra item added for new item func
 			$subAction->errors = $subAction->getSaveErrorMessages();
 			if ($subAction->errors) {
 				$this->addSubsaveActionError($subAction);

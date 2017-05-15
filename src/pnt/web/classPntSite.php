@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -150,11 +150,17 @@ class PntSite extends PntPage {
 
 	function initHttpRequest() {
 		$this->initConverter();
-		$this->useClass('HttpRequest', $this->getDir());
-		$this->request = new HttpRequest($this->getErrorHandler(), $this->converter->getLabelCharset(), $this->httpRequestThrowsExp);
-		$alias = $this->isFunkyUrls() ? $this->funkyAlias : null;
-		$this->request->initHttpData($alias);
-		$this->requestData = $this->request->getRequestData();
+		if (isset($_SERVER['REMOTE_ADDR'])) {
+			$this->useClass('HttpRequest', $this->getDir());
+			$this->request = new HttpRequest(
+				$this->getErrorHandler(),
+				$this->converter->getLabelCharset(),
+				$this->httpRequestThrowsExp
+			);
+			$alias = $this->isFunkyUrls() ? $this->funkyAlias : null;
+			$this->request->initHttpData($alias);
+			$this->requestData = $this->request->getRequestData();
+		}
 	}
 
 	/** The application folder, where application specific skins are included from, 
@@ -233,7 +239,7 @@ class PntSite extends PntPage {
 	* @return String The baseUrl
 	*/
 	function getBaseUrl() {
-		if (!isSet($this->baseUrl)) {
+		if (!isSet($this->baseUrl) && isset($this->request)) {
 			$cnv = $this->getConverter();
 			$beforeFunky = $this->isFunkyUrls() 
 				? '/'. $cnv->urlEncode($this->getAppName()). '/'. $this->funkyAlias

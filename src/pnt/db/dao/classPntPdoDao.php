@@ -1,5 +1,5 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
 Distrubuted and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
@@ -55,7 +55,6 @@ class PntPdoDao extends PntDao {
 		global $queryCount;
 		$queryCount++;
 //print "<BR>\n $queryCount $this->query";
-		
 		if ($this->statement && $this->preparedQuery) 
 			$this->statement->closeCursor();
 		$this->error = null;
@@ -86,7 +85,7 @@ class PntPdoDao extends PntDao {
 				$this->error .= ' '. $this->errorInfo[2];
 				$this->errNo = $this->errorInfo[0];
 			}
-			$this->error .= "<BR>$this->query<BR>". Gen::toString($this->parameters);
+			$this->error .= "<BR>$this->query<BR>". Gen::toString($this->parameters, 20);
 			$this->rowIndex = null;
 //print $this->error;
 		}
@@ -185,6 +184,14 @@ class PntPdoDao extends PntDao {
 		return $row;
 	}
 
+	/** Gets next row as associative array, or false if none */
+	function getRow() {
+		$row = $this->statement->fetch(PDO::FETCH_NUM);
+		if ($row) $this->rowIndex++; 
+		else $this->rowIndex = null;
+		return $row;
+	}
+	
 	function release() {
 		if (!$this->result) return;
 		

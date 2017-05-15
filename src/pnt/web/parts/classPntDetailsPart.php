@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) MetaClass, 2003-2013
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -277,7 +277,7 @@ class PntDetailsPart extends PntPagePart {
 	/** @return HTML string a hyperlink to the DetailsPage for the object $text 
 	* refers to, or just the $content if $text does not refer to an object 
 	* that has an id
-	* @param PntPagePart $part the part calling this eventHanlder function
+	* @param PntPagePart $part the part calling this eventHanlder func
 	* @param PntXmlNavValue $text DOM object for processing the form parameter
 	* @param HTML string $content the content of the hyperlink
 	* @param $hrefNoId HREF string the href ending with id= but without the id of the object

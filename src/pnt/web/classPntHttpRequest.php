@@ -1,13 +1,14 @@
 <?php
-/* Copyright (c) MetaClass, 2012-2013
+/* Copyright (c) MetaClass, 2012-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
-This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
+This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-	
+
 See the License, http://www.gnu.org/licenses/agpl.txt */
+ 
 Gen::includeClass('PntValidationException', 'pnt/secu');
 
 /** Http request validator. Logs validation warnings for bad input. Returns only valid input.
@@ -77,7 +78,7 @@ class PntHttpRequest {
 	//REMOTE_ADDR, SERVER_ADDR
 	public $ipV4Pattern = '~^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$~D';
 	//generic preg character class pieces, backslashes for escaping added by MetaClass 
-	public $httpCookieNamePat = '_';
+	public $httpCookieNamePat = '\\-_'; // \\- added by MetaClass because errors are too frequent and do not seem malicious
 	public $headerNameCp  = '\\-_'; //actually $_SERVER has no names with -
 	public $headerValueCp = '!"#$%&\'()*+,\\-./\\\\;:<=>?@[\\]\\^_`{|}\\~ '; //"\t" added in constructor //basically all visible ASCII characters and tab
 	//generic preg character class pieces, backslashes for escaping added by MetaClass 
@@ -136,7 +137,10 @@ class PntHttpRequest {
 		$this->nullChar = chr(0);
 		$this->headerValueCp .= "\t";
 		$this->serverCps['REQUEST_URI']  = $this->serverCps['SCRIPT_NAME']. '?'; //added by MetaClass
-		$this->serverCps['PATH_TRANSLATED'] = $this->filePathCp;
+		if (subStr(php_uname('s'), 0, 7) == 'Windows')
+			$this->serverPatterns['PATH_TRANSLATED'] = "~^([a-zA-Z]:)?[a-zA-Z0-9{$this->filePathCp}]+$~D";
+		else 
+			$this->serverCps['PATH_TRANSLATED'] = $this->filePathCp;
 		
 		$this->serverPatterns['CONTENT_LENGTH'] = $this->integerPattern; 
 		$this->serverPatterns['SERVER_PORT'] = $this->integerPattern;
@@ -316,11 +320,11 @@ class PntHttpRequest {
 	 * @return string validation error message or null if valid
 	 */ 
 	function validateGpcValue($name, $value) {
-		return $name == session_name()
+		return session_name() === $name
 			? $this->validateSessionId($name, $value) 
 			: $this->validateForNullChar($name, $value);
 	}
-	
+		
 	function validateForNullChar($name, $value) {
 		if (strPos($value, $this->nullChar) !== false)
 			return "$name invalid: null byte";

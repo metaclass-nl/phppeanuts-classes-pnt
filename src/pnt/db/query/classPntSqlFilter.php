@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -309,9 +309,8 @@ class PntSqlFilter extends PntSqlSpec {
 	 * @param PntDao $qh  */
 	function addParamsTo($qh) {
 		$comparator = $this->get('comparator');
-		$qh->param($comparator
-				? $comparator->sqlFromValue($this->value1)
-				: $this->value1);
+        if ($comparator)
+            $qh->param($comparator->sqlFromValue($this->value1));
 		if ($comparator && $comparator->get('addition') )
 			$qh->param($comparator
 				? $comparator->sqlFromValue($this->value2)

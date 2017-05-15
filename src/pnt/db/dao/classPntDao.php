@@ -1,5 +1,5 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
 Distrubuted and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
@@ -331,6 +331,10 @@ class PntDao {
 	/** Gets next row as associative array, or false if none */
 	function getAssocRow() {
 		trigger_error('getAssocRow method should have been implemented by a subclass', E_USER_ERROR);
+	}
+	
+	function getRow() {
+	    trigger_error('getRow method should have been implemented by a subclass', E_USER_ERROR);
 	}
 	
 	function release() {

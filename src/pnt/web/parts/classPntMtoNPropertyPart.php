@@ -1,7 +1,7 @@
 <?php 
 /* Copyright (c) MetaClass, 2003-2013
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -139,22 +139,22 @@ class PntMtoNPropertyPart extends PntPropertyPart {
 		print "
 <script>
 	pntMtoNPropsEdited[pntMtoNPropsEdited.length] = new Array('$propName', '". $this->getItemTableId(). "');
-	function tdl(tableCell, id) {
+	func"."tion tdl(tableCell, id) {
 		//id may be wrong becuase we copy rows, use id from row
 		row = tableCell.parentNode;
 		document.location.href = tdlGetHref(tableCell, row.id);
 	}
-	function $propName"."RemoveRowOf(tableCell) {
+	func"."tion $propName"."RemoveRowOf(tableCell) {
 		row = tableCell.parentNode;
 		itemTable = getElement($tableIdLit);
 		table_deleteRow(itemTable, tableCell.parentNode);
 	}
-	function table_deleteRow(itemTable, row) {
+	func"."tion table_deleteRow(itemTable, row) {
 		for (i=0; i<itemTable.rows.length; i++) 
 			if (itemTable.rows[i] == row) 
 				return itemTable.deleteRow(i);
 	}
-	function $propName"."AddItem(id, label) {
+	func"."tion $propName"."AddItem(id, label) {
 		itemTable = getElement($tableIdLit);
 		tbody = getNodeByTagName(itemTable.childNodes, 'TBODY', 0);
 		headerRow = itemTable.rows[0];

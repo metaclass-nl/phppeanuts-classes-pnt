@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -77,7 +77,10 @@ class PntPage extends PntRequestHandler {
 
 	
 	function includeSkin($name, $param=null) {
-		$this->checkAlphaNumeric($name);
+        if (strlen($name) > Gen::$CLASS_MAX_LENGTH)
+            throw new PntValidationException("$this - skin name too long: '$name'");
+
+        $this->checkAlphaNumeric($name);
 		$dir = $this->getDir();
 		pntCheckIncludePath($dir);
 		$filePath = "../$dir"."skin$name.php";
@@ -160,7 +163,7 @@ class PntPage extends PntRequestHandler {
 	}
 	
 	function ajaxPrintHeaders() {
-		header('Content-type: text/xml');
+    header("Content-type: text/html; charset=". $this->getCharset());
 		header('X-Content-Type-Options: nosniff');
 		header('X-Frame-Options: DENY');
 	}

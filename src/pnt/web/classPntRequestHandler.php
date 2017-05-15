@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -422,6 +422,9 @@ class PntRequestHandler {
 	 * @return boolean wheather a class file was included. Also true if the class already existed.
 	 */
 	function tryUseClass($className, $dir) {
+        if (strlen($className) > Gen::$CLASS_MAX_LENGTH)
+            throw new PntValidationException("$this - class name too long: '$className'");
+
 		$this->checkAlphaNumeric($className);
 		pntCheckIncludePath($dir);
 		$params = $this->getTryUseClassTryParams($className, $dir);
@@ -485,8 +488,8 @@ class PntRequestHandler {
 		$prop = $clsDes->getPropertyDescriptor('id');
 		$cnv->initFromProp($prop);
 		$converted = $cnv->fromLabel($id);
-		if ($cnv->error) 
-			throw new PntValidationException('id conversion: '. $cnv->error);
+		if ($cnv->error)
+			throw new PntValidationException("id conversion: '$id' ". $cnv->error);
 
 		if (empty($converted))
 			return $this->object = new $type();

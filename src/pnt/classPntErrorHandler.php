@@ -1,7 +1,7 @@
 <?php
 /* Copyright (c) MetaClass, 2003-2013
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -192,7 +192,7 @@ class PntErrorHandler {
 		//fake traceline for Exception contructor call
 		array_unshift($trace, array(
 			'class' => get_class($exception),
-			'function' => '__construct',
+			'func'.'tion' => '__construct',
 			'line' => $exception->getLine(),
 			'file' => $exception->getFile(),
 			'args' => array($exception->getMessage(), $exception->getCode()) ));
@@ -340,13 +340,13 @@ class PntErrorHandler {
 			$frame = $traceArray[$i];
 			if (isSet($frame['class']) 
 					&& ($frame['class'] == get_class($this) || $frame['class'] == 'PntErrorHandler')
-					&& $frame['function'] == 'handleError') {
+					&& $frame['func'.'tion'] == 'handleError') {
 				$traceArray = array_slice($traceArray, $i+1);
 			}
 		}
 		//hide db connect arguments
-		if (substr($traceArray[0]['function'],-7,7) == 'connect' ||
-			($traceArray[0]['function'] == '__construct' && $traceArray[0]['class'] == 'PDO') )
+		if (substr($traceArray[0]['func'.'tion'],-7,7) == 'connect' ||
+			($traceArray[0]['func'.'tion'] == '__construct' && $traceArray[0]['class'] == 'PDO') )
 			$traceArray[0]['args']=array();
 
 		return $traceArray;

@@ -1,160 +1,54 @@
-replaced pntontw by pnt head
-merged changes from pntontw since tag pnt2_0_0_5 into head
-comitted
-----------------------------------------
-changes since pnt 2.1.0
-replaced pnt with pntontw (pnt2_2_b2), from webtoko:
- Only use parameterize queries:
-- PntDao
-	::param added param $placeholder
-	::clearParams added
-	::replacePlaceholders added
-	::where_equals now generates parameterized query. 
-		added parameter $placeholder='?'
-- PntPdoDao::param_name removed
-	::param moved to PntDao
-- PntMysqlDao, PntSqliteDao::_query now replaces placeholders by param values
-- polymorhism ::addParamsTo implemented for PntSqlFilter, PntSqlJoinFilter, PntSqlSort, PntSqlCombiFilter
-- PntSqlJoinFilter
-	::addExtraConditionParamsTo added
-	::addSortSelectParamsTo added
-- PntSqlSort::addExtraSelectParamsTo added
-- pnt.db.query tests adapted
------------------------------------------
-- PntMysqlDao now defines and calls ::logQuery
+changes since v2.2.0
+
+- PntPropertyDesciptor::getValueFor no longer passes $filter if true
+
+bug: validationWarning for integer 0 too short
+- PntHttpRequest::validateGpcValue compare session_name by ===
+
+bug:
+- PntStringConverter::sanitizeHtml returned an empty result.
+	Removed u modifiers.
+	Warning, het pattern may no longer work for UTF8
+
+! skinFooterClean should use htOut
+
+- HttpRequest needs to be added to upgrade pnt 2.2.0 or to the readme
+------------------------------------
+- PntHttpRequest::__construct to allow windows file paths :
+		if (subStr(php_uname('s'), 0, 7) == 'Windows')
+			$this->serverPatterns['PATH_TRANSLATED'] = "~^([a-zA-Z]:)?[a-zA-Z0-9{$this->filePathCp}]+$~D";
+		else
+			$this->serverCps['PATH_TRANSLATED'] = $this->filePathCp;
+
+bugs added to buglist on website pnt
+--------------------------
+obtained pnt changes from phppeanuts.org, (cvs tag pnt2_2_3):
+- PntGen::assocsToStrings If max === null Gen::toString is used on the values instead of Gen::valueToString.
+- PntDao, PntPdoDao, PntMysqlDao, PntSqliteDao::getRow added
+
+adapted several pnt classes in andere/pntsub/examples_shared to HcodeBrowser limitations
+----------------------------
+improvements for compatibility with hypercode browsers hack
+--------------------------
+MclBestandDialog gave wrong number of parameters
+- PntSqlFilter::addParamsTo no longer adds a parameter if no comparator
+- PntPdoDao::_runQuery now reports up to 20 parameters on error
 -------------------
-Synchronizer Token Pattern, more PntSecurityExceptions
-- PntHttpRequest now validates SessionId (to be overridden if non-standard session ids are used)
-- PntRequestHandler::getRequestedObject now throws PntSecurityException on conversion error
-	::getRequestHandler now throws PntSecurityException if no handler class included
-	::useClass now throws PntSecurityException if no class included
-- PntSite::getSecurityManager now passes fixedSalt param
-	::handleRequest now passes request and scout to ::isAuthenticated
-		now logs out if not in development and a PntSecurityException is caught
-	::getInvalidActionTicketMessage now urges to check all fields
-	::initHttpRequest makes PntSecurityExcepion thrown by default
-- PntSecurityManager::__construct now expects fixedSalt param
-	::initAuthenticator includes from pnt/secu, now passes fixedSalt param
-	::newToken added, calls $this->getAuthenticator()->newToken
- 	::isAuthenticated now passes PntHttpRequest, added param $scout
- 	::checkAccessRef added, checks referrer token and footprint
- 	::getMessageFootprintMismatch, getMessageDeniedAccessRef added
- 	::isEntryPage added, returns whether the requestHandler is an entry page that does not require a valid pntRef if no footprints
- 		To be overridden for LoginPage if used, or for aditional entry pages
-- PntNoAuthenticator moved to pnt/secu
-	::__construct now expects fixedSalt param
-	::logOut now expects scout and eventually exception parameters
-	::newToken added
-	::getAndCreateNextActionTicket added
-	::isValidActionTicket added
-	::getActionTicketLifeTime added, returns 5 minutes, to be overridden by application developer if to change lifetime 
-- PntSessionBasedScout::getReferrerId no longer expects numeric incremental keys in $uris
-	::moved now gets new footprintId from SecurityManager::newToken
-	::getFootprintHref factored out ::getFootprint
-- PntPage::getFootprintId no longer casts to int
-	::printFootprintJsLiteral added
-	::getDetailsHref now checks getFootprintId not to be empty
-	::addContextButtonTo now urlEncodes getFootprintId
-	::getAndCreateNextActionTicket now delegates to Authenticator ::getAndCreateNextActionTicket
-	::doScouting now throws PntSecurityExcepion on illegal scouting direction
-- PntPagePart::getFootprintId now returns own footprintId if set
-- PntAction::checkActionTicket now delegates to Authenticator ::isValidActionTicket
-	now checks tokens to be alphanumeric
-- PntErrorHandler::informUser now only sends header is headers not sent 
-- PntFilterFormPart::getFilterCombinators now throws PntSecurityException if combinator != 'AND' or 'OR'
-	::initFilter now throws PntSecurityException if comparator not valid for filter valueType
-- PntxAdvancedFilterFormPart::getInitializedAdvancedFilter now throws PntSecurityError if PntReflectionError
-	::printAdvancedFilterDivContentPart, ::printAdvancedFilterComparePart now sets footprintId to pntRef
-! Site::getInvalidActionTicketMessage (language override) adapted
-! SecurityManager::checkRefEqual now allows for forwardRequest by project IndexPage
-	you may want to allow some more entry requests
-
-comitted, to be tagged pnt2_2_b1, mcl3_7, webtoko1_7
------------------------------------------------
-Synchronizer Token Pattern
-- PntSite, PntSecurityManager, PntNoAuthenticator renamed fixedSalt to tokenSalt
-- PntNoAuthenticator::removeOutdatedFootprints to ::removeOutdatedActionFootprints
-	::newFootprintId added, stores footprint time in session for up to ::getFootprintsLimit footprintIds
-	::isValidFootprint added,  checks footprintId to exist and be within ::getFootprintLifeTime 
-	::getFootprintsLimit, ::getFootprintLifeTime  added
-	::initHsalg now called from constructor instead of from ::newToken
-- PntSecurityManager renamed ::newToken to ::newFootprintId 
-	::checkAccessRef now calls authenticator::isValidFootprint, does only ::checkRefEqual if scout has $footprint
-- PntSessionBasedScout::moved now calls ::newFootprintId
-
-Parameterized Queries
-- PntPdoDao::_runQuery now first closes cursor of old prepared statement
-	now reuses prepared statement if same query
-
-comittted, tag pnt2_2_b1 moved
------------------------------
-In order to support several types of SecurityException:
-- subclass PntValidationException added
-- globally: PntValidationException used instead of PntSecurityException
-	except in try catch of PntSite::handleRequest
-
-comitted, moved tag pnt2_2_b1  mcl3_7, webtoko1_7
--------------------------
-From bgz branche gow4_4_0_pnt2 en later:
-- PntObjectEditDetailsPage
-+	::getFormTexts bug fixed: errors did show up
-+	::extraInitFormTexts param added $hideErrors, default false
- 
-+ PntDbClassDescripor::getFieldFilters gebruikt nu getPersistentFieldPropertyDescriptors to include ids
-+ PntObjectSaveAction::handleRequest now allways calls ::initialize
-+ PntObjectReportPage::isLayoutReport return $this->inPopup 
-+ PntFilterFormPart::getFilterResult sets allItemsSize if $rowCount == 'All'
-+ PntObject::getOptions bug fixed: getPropertyDecriptor
-
-comitted, moved tag pnt2_2_b1
----------------------------------------
-From bgz branche gow5_2_5_0089 after upgrading to pnt2_2_b1 and debugging, 20-3-2013
-
-Session variable usage specific to baseUrl 
-x PntSessionBasedScout, PntNoAuthenticator added and using sessionVar for session vars specific to baseUrl
-+ pnt.test.auth.CaseHandlerSecurity::testPntObjectDeleteMarkedAction now uses $scout->sessionVar
-+ PntSite::getGlobalFilters, setGlobalFilters session gebruik specifiek voor baseUrl
-
-debugging:
-x PntHttpRequest::noMagicQuotesGpc, ::validateGpc now support nested arrays
-x PntRequestHandler::getRequestedObject bug solved: bad exception name
-x PntPage::getPart now supports mac 6 arguments (was 5)
-- PntObjectReportPage::printBody is back
-- PntPage::getConvert no longer calls depricated PntNavigation::_getInstance
-
-From metaclass.nl:
-- PntPage::getConvert no longer calls depricated PntNavigation::_getInstance
-	::printSetTitle corrected
-
-committed,  moved tag pnt2_2_b2, mcl3_8, webtoko1_7
----------------------------------------------------------
-from webtoko:
-Without authentication allways allow access to entry pages without pntRef
-- PntSecurityManager::checkAccessRef now allows error pages 
-		no longer requires footprintUris to be empty for entry pages
-	::isEntryPage now delegates to authenticator
-	::getMessageDeniedAccessRef now includes option to return to entry page
-- PntNoAuthenticator::isEntryPage added, allows urls with no requestData
-Session variable usage specific to baseUrl
-- PntNoAuthenticator added and using sessionVar for session vars specific to baseUrl (got lost)
---------------------
-- PntGen::getPntVersion 2.2.0.
-
-Adaptation to examples / debugging:
-- PntNoAuthenticator::logOut removed param $scout
-- PntSite::handleRequest now again uses SecurityManager::isAuthenticated
-- PntHttpRequest::validateGpc line 258, 275 replaced $error by $this->error
-- PntPdoDao::getAssocRows now throws pntDbError if no statement
-- FilterFormPart::initFilter bug solved: allways gave default comparator
-
-Adaptation to Synchronizer Token Pattern:
-- PntMenuPart::getMenuLineParams now supports empty line
-
-moved PntSecurityManager to pnt/secu
-
-comitted, tagged pnt2_2_0, pntExt2_2_0
-
-------------------------------
-Added classes/pnt to composer library metaclass-nl/phppeanuts-classes-pnt
-
-committed to git, tagged v2.2.0
+Bug: Special signs in image urls caused malformed xml http response
+- PntPage::ajaxPrintHeaders now specifies character set
+comitted, pushed, installed dd 29-9-2015 on campingmarcenaylac.com
+---------------------------------
+Protect file system against potential buffer overflows
+x PntGen add static var CLASS_MAX_LENGTH = 246
+x PntPage::includeskin now checks name length
+x PntRequestHandler::tryIncludeClass now checks length of class name
+committed, pushed
+---------------------------------------------
+Error message with id conversion error unclear
+- PntRequestHandler::getRequestedObject now includes converion input in error message
+-----------------------------------------------------
+Too many valdiation errors for cookie name that do not seem malicious
+- PntRequestHandler $httpCookieNamePat added \\-
+----------------------------------------------
+- PntSite adapted to work from the command line
+-----------------------------------

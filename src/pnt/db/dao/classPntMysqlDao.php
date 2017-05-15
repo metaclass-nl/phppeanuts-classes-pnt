@@ -1,5 +1,5 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
 Distrubuted and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
@@ -158,6 +158,13 @@ class PntMysqlDao extends PntDao {
 		if ($row) $this->rowIndex++; 
 		else $this->rowIndex = null;
 		return $row;
+	}
+	
+	function getRow() {
+	    $row = mysql_fetch_row($this->result);
+	    if ($row) $this->rowIndex++;
+	    else $this->rowIndex = null;
+	    return $row;
 	}
 	
 	function release() {

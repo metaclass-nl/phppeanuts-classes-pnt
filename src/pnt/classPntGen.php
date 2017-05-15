@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -15,10 +15,12 @@ See the License, http://www.gnu.org/licenses/agpl.txt */
  */
 class PntGen {
 
+    static $CLASS_MAX_LENGTH = 246; //linux 255 -  'class.php' ;  eCryptFS 143 - 9
+
 	/** Returns phpPeanuts version identifier 
 	@return String */
 	static function getPntVersion() {
-		return "2.2.0";
+		return "2.3.0.alpha";
 	}
 	
 	/** Tries to include a class whose file name follows the pnt class file name rule:
@@ -60,6 +62,7 @@ class PntGen {
 	* code from outside the classes folder. PntRequestHandler::useClass does check.
 	*/
 	static function includeClass($className, $dirPath='', $debug=false) {
+
 		if (class_exists($className)) return true;
 	
 		if ($dirPath && substr($dirPath, -1) != '/')
@@ -101,8 +104,8 @@ class PntGen {
 		if ( isSet($GLOBALS['PntIncluded'][$filePath]) )
 			//inclusion has been tried before, return cached result
 			return $GLOBALS['PntIncluded'][$filePath];
-	
-		$found = file_exists($filePath);
+
+        $found = file_exists($filePath);
 		$GLOBALS['PntIncluded'][$filePath] = $found;
 		if ($found) 
 			include_once($filePath); //tryIncludeOnce added to riskyFnctions check
@@ -135,7 +138,6 @@ class PntGen {
 			|| ($type == 'number'
 				&& is_numeric($value)
 			);
-		
 	}
 	
 	/** For debugging purposes, for user interface string use StringConverter
@@ -191,13 +193,16 @@ class PntGen {
 
 	/** 
 	* @param Array $array an associative array
+	* @param int $max maximim number of elements to include. If null all are included and 
+	*   Gen::toString is used on the values instead of Gen::valueToString.
 	* $return An array with strings representing the associations
 	*/
 	static function assocsToStrings($array, $max=null) {
 		$result = array();
 		$count = 0;
 		while ( ($max==null || $count <= $max) && (list($key) = each($array)) ) {
-			$result[] = Gen::valueToString($key).'=>'.Gen::valueToString($array[$key]);
+			$result[] = Gen::valueToString($key).'=>'
+			    . ($max===null ? Gen::toString($array[$key]) : Gen::valueToString($array[$key]) );
 			$count++;
 		}
 		return $result;
@@ -243,14 +248,14 @@ class PntGen {
 			if (isSet($traceArray[$i]))
 				$frame = $traceArray[$i];
 			else
-				$frame = array('function' => '-', 'args' => array() );
+				$frame = array('func'.'tion' => '-', 'args' => array() );
 			print "\n<TR vAlign=top><TD>";
 			if (isSet($frame['object']) && !Gen::is_ofType($frame['object'], 'Exception')) 
 				print Gen::toString($frame['object']);
 			else 
-				print isSet($frame['class']) ? $frame['class'] : '-';
+				print isSet($frame['cl'.'ass']) ? $frame['cl'.'ass'] : '-';
 			print "</TD><TD>";
-			print $frame['function'];
+			print $frame['func'.'tion'];
 			print "</TD><TD>";
 			print isSet($prev['line']) ? $prev['line'] : '&nbsp;';
 			print "</TD><TD>";
@@ -509,7 +514,7 @@ class PntGen {
 				$format = ValueValidator::getInternalTimeFormat();
 			} else {
 				Gen::includeClass('PntError', 'pnt');
-				throw new PntError("invalid date/time: '$dateTime'");
+				throw new PntError("invalid date/time: '$dateAndOrTime'");
 			}
 		}
 		$tm = strtotime($dateAndOrTime);

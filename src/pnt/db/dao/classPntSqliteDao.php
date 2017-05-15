@@ -1,5 +1,5 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
 Distrubuted and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
@@ -145,6 +145,10 @@ class PntSqliteDao extends PntDao {
 		forEach ($this->fieldNames as $i => $fieldName)
 			$result[$fieldName] = $numRow[$i];
 		return $result;
+	}
+	
+	function getRow() {
+		return sqlite_fetch_array($this->result, SQLITE_NUM);
 	}
 	
 	/** Adds fieldProperties to the object for the columns from the database.

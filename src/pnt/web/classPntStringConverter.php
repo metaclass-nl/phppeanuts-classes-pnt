@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -410,14 +410,14 @@ class PntStringConverter extends PntObject {
 	static function sanitizeHtml($txt) {
         // Remove active content and frames
 		return preg_replace(array(
-	            '@<script[^>]*?.*?</script>@siu',
-	            '@<object[^>]*?.*?</object>@siu',
-	            '@<embed[^>]*?.*?</embed>@siu',
-	            '@<applet[^>]*?.*?</applet>@siu',
-	            '@</?((frameset)|(frame)|(iframe))@iu',
+	            '@<script[^>]*?.*?</script>@si',
+	            '@<object[^>]*?.*?</object>@si',
+	             '@<embed[^>]*?.*?</embed>@si',
+	            '@<applet[^>]*?.*?</applet>@si',
+	            '@</?((frameset)|(frame)|(iframe))@i'
         	),  array(' ', ' ', ' ', ' ', ' '), $txt ); 
 	}
-	
+		
 	/** converts from user interface string representation to
 	* domain model property value. 
 	* @return mixed value or null if conversion fails 

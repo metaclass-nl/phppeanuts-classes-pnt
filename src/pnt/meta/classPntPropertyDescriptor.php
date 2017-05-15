@@ -1,7 +1,7 @@
 <?php
-/* Copyright (c) MetaClass, 2003-2013
+/* Copyright (c) MetaClass, 2003-2017
 
-Distrubuted and licensed under under the terms of the GNU Affero General Public License
+Distributed and licensed under under the terms of the GNU Affero General Public License
 version 3, or (at your option) any later version.
 
 This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty 
@@ -293,7 +293,9 @@ class PntPropertyDescriptor extends PntDescriptor
 		$name = $this->getName();
 		$mth = "get$name";
 		if (method_exists($obj, $mth)) 
-			return $obj->$mth($filter);  
+			return $filter === true 
+				? $obj->$mth()
+				: $obj->$mth($filter);  
 
 		return $this->deriveValueFor($obj, $filter); 
 	}
