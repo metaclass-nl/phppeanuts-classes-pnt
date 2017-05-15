@@ -3,7 +3,6 @@
 <BR>
 This library only contains the pnt classes. To use it install phppeanuts-skeleton and follow the instructions in its Readme.md</P>
 
-<P>This version does not include pntUnit and the unit tests. 
 <H3>What's new</H3>
 
 <P>Since 2.2.0</P>

@@ -52,3 +52,5 @@ Too many valdiation errors for cookie name that do not seem malicious
 ----------------------------------------------
 - PntSite adapted to work from the command line
 -----------------------------------
+- added unit tests
+-----------------------
