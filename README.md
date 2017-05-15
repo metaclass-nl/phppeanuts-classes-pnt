@@ -1,5 +1,5 @@
 <H2>Release notes</H2>
-<P>Version 2.3.0<BR>
+<P>Version 2.3.0.alpha<BR>
 <BR>
 This library only contains the pnt classes. To use it install phppeanuts-skeleton and follow the instructions in its Readme.md</P>
 
@@ -19,7 +19,7 @@ This library only contains the pnt classes. To use it install phppeanuts-skeleto
 		<li>PntHttpRequest now allows windows file paths
 		<li>Protects file system against potential buffer overflows
 		<li>PntSite adapted to work from the command line
-		<li>tested with PHP 5.5.9, 5.6.13
+		<li>tested with PHP 5.5.9, 5.6.11, 7.0.1
 		<LI>several small changes, see <a href="doc/changes.txt">doc/changes.txt</a>.
 	</ul>
 </UL>
