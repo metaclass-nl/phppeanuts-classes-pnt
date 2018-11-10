@@ -54,3 +54,15 @@ Too many valdiation errors for cookie name that do not seem malicious
 -----------------------------------
 - added unit tests
 -----------------------
+Http 2.0 occurred
+- Allowed HTTP/2.n in PntHttpRequest
+--------------------------------------
+Incompatibility with MySQL 5.7.18: Fout bij opslaan PntDbObject met attribuutwaarde boolean false
+\PntPdoDao::param added, converts booleans to ints
+    (may be incorrect for non-MySQL databases!)
+Incompatibility with MySQL 5.7.18: SELECT DISTINCT with ORDER BY now requires order by column to be in SELECT list
+\PntDbClassDescriptor::getSelectQueryHandler added parameter $distinct=true
+    ::getSelectQueryHandlerFor added parameter $distinct=true
+PntErrorHandler::printDebugInfo now uses StringConverter to convert to html
+    (PROBLEM: browser is not informed about characterset used)
+----------------------------------------

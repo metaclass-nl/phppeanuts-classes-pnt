@@ -239,17 +239,18 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		return $fieldMap;
 	}
 
-	function getSelectQueryHandler() {
+	function getSelectQueryHandler($distinct=true) {
 		return $this->getSelectQueryHandlerFor(
 			$this->getTableName()
 			, $this->getTableMap()
 			, $this->getFieldMapPrefixed()
+			, $distinct
 			);
 	}
 
-	function getSelectQueryHandlerFor($tableName, $tableMap, $fieldMapPrefixed) {
+	function getSelectQueryHandlerFor($tableName, $tableMap, $fieldMapPrefixed, $distinct=true) {
 		$qh = $this->getSimpleQueryHandler();
-		$qh->select_from($fieldMapPrefixed, $tableName, true); //use distinct
+		$qh->select_from($fieldMapPrefixed, $tableName, $distinct); // NB, distinct gives trouble with sort by columnt not in the SELECT
 		if ($this->polymorphismPropName) 
 			$qh->joinAllById($tableMap, $tableName);
 

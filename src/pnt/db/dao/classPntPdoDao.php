@@ -160,9 +160,24 @@ class PntPdoDao extends PntDao {
 		
 		return PDO::PARAM_STR;
 	}
-	
 
-	/** Gets rows starting at current rerord position 
+    /** Add parameter value for later use with statement execute.
+     * Instead of a type parameter the actual type of $value will be used for correct binding.
+     * I.e. booleans will be bound as booleans, strings as strings etc.
+     * However, not all subclasses support type specific binding. (PntPdoDao binds all as string)
+     * @param mixed $value value to add
+     * @param string $placeholder. default '?'
+     * @return String placehoder
+     */
+    function param($value, $placeholder='?')
+    {
+        if (is_bool($value)) {
+            $value = $value ? 1 : 0;
+        }
+        return parent::param($value, $placeholder);
+    }
+
+        /** Gets rows starting at current rerord position
 	* @param number $max The maximum number of rows to get. If null all remaining rows are returned.
 	* Returns an array of associative row arrays (indexed[rowIndex][rowName])
 	*/

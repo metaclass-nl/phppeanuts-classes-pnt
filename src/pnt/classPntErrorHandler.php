@@ -156,7 +156,7 @@ class PntErrorHandler {
 		if ($this->shouldLogException($e))
 			$this->logError($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine(), $timeStamp, $traces, get_class($e));
 		if (!$this->shouldReportException($e)) return true;
-		 
+
 		if ($this->isDevelopment() )
 			$this->printDebugInfo((Gen::is_a($e, 'PntErrorException') ? $e->getSeverity() : $e->getCode())
 				, $e->getMessage(), $e->getFile(), $e->getLine(), $timeStamp, $traces, get_class($e));
@@ -318,12 +318,13 @@ class PntErrorHandler {
 		if (!$type || is_subclassOr($type, 'PntErrorException'))
 			$type = $this->mapErrorLevel($levelOrCode);
 		print "<br />\n<B>$type:</B> '";
-		print htmlEntities($message);
+        $cnv = $this->getStringConverter();
+		print $cnv->toHtml($message);
 		print "' in <B>$filePath</B><BR>\nat line <B>$lineNumber</B>";
 		if (!$this->hasHandledError) {
 			print "<BR>Request params: <BR>\n";
 			forEach(Gen::assocsToStrings($this->getRequestData(false)) as $assoc)
-				print htmlEntities(stripSlashes($assoc)). ", \n";
+				print $cnv->toHtml(stripSlashes($assoc)). ", \n";
 		}
 		print "<br />\n";
 		if (isSet($this->debugInfoBacktrace)) {
