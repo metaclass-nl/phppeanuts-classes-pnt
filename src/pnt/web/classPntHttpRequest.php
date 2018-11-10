@@ -146,8 +146,8 @@ class PntHttpRequest {
 		$this->serverPatterns['SERVER_PORT'] = $this->integerPattern;
 		//this may only work for IP4:
 	    $this->serverPatterns['REMOTE_ADDR'] = $this->ipV4Pattern;
-	    $this->serverPatterns['SERVER_PROTOCOL'] = '~^HTTP\\/1\.[0-9]$~'; //officially hugher numers are allowed, but they do not yet occur
-		
+	    $this->serverPatterns['SERVER_PROTOCOL'] = '~^HTTP\\/[1-2]\.[0-9]$~'; //officially hugher numers are allowed, but they do not yet occur
+
 		$ini_value = ini_get('pcre.backtrack_limit'); //Available since PHP 5.2.0.
 		if ($ini_value) $this->pcre_backtrack_limit = (int) $ini_value;
 	}
