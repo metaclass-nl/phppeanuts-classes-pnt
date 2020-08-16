@@ -1,8 +1,6 @@
 <?php
 // Copyright (c) MetaClass Groningen, 2003-2012
 
-Gen::includeClass('PntAssertionFailure', 'pntUnit/notifications');
-
 /** This class implements the assertions. Its interface is more
 * extended then the PHPUnit compatible interface of PntTestCase .
 * This class also can be used for assertions outside of testcases.
@@ -217,8 +215,9 @@ class PntAssert {
 		// should be done first thing in assertions
 		global $pntTestNotifier;
 		if (!isSet($pntTestNotifier) ) return;
-		
-		$event = new PntAssertionFailure(
+
+        Gen::includeClass('PntAssertionFailure', 'pntUnit/notifications');
+        $event = new PntAssertionFailure(
 			$assertion, $reference, $toCheck, $label, $precision);
 			
 		$pntTestNotifier->event($event);

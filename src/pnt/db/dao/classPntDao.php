@@ -388,11 +388,13 @@ class PntDao {
 	 * @return String placehoder 
 	 */
 	function param($value, $placeholder='?') {
-		if ($placeholder=='?')
-			$this->parameters[] = $value;
-		else
-			$this->parameters[$placeholder] = $value;
-		return $placeholder;
+		if ($placeholder=='?') {
+            $this->parameters[] = $value;
+            return $placeholder;
+        } else {
+            $this->parameters[$placeholder] = $value;
+            return ':'. $placeholder;
+        }
 	}
 
 	function clearParams() {

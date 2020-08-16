@@ -66,3 +66,6 @@ Incompatibility with MySQL 5.7.18: SELECT DISTINCT with ORDER BY now requires or
 PntErrorHandler::printDebugInfo now uses StringConverter to convert to html
     (PROBLEM: browser is not informed about characterset used)
 ----------------------------------------
+Debugging
+- PntPdoDao::param now returns : in front of placeholder parameter
+- PntAssert moved includeClass PntAssertionFailure to ::fail
