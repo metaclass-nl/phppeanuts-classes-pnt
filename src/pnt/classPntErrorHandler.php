@@ -82,9 +82,9 @@ class PntErrorHandler {
 	}
 	
 	function getDefaultReportingLevel() {
-		$result = E_ALL ^ E_NOTICE ^ E_USER_NOTICE;
-//		if (defined('E_DEPRECATED')) 
-//			$result = $result ^ E_DEPRECATED ^ E_USER_DEPRECATED;
+		$result = E_ALL; // ^ E_NOTICE ^ E_USER_NOTICE;
+		if (defined('E_DEPRECATED'))
+			$result = $result ^ E_DEPRECATED ^ E_USER_DEPRECATED;
 		return $result;
 	}
 		
@@ -245,7 +245,7 @@ class PntErrorHandler {
 		$someInfo['clientIp'] = isSet($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : null;
 		$someInfo['clientHost'] = isSet($_SERVER["REMOTE_ADDR"]) ? gethostbyaddr($_SERVER["REMOTE_ADDR"]) : null;
 		$someInfo['script'] = $_SERVER["SCRIPT_FILENAME"];
-		$someInfo['requestParams'] = implode(Gen::assocsToStrings($requestData), ", ");
+		$someInfo['requestParams'] = implode(", ", Gen::assocsToStrings($requestData));
 		$someInfo['referer'] = isSet($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'no referer';
 
 		$logString = str_replace("\n", ' ', Gen::toCsvString($someInfo));
@@ -356,7 +356,7 @@ class PntErrorHandler {
 	function isDevelopment() {
 		if (!isSet($_SERVER['HTTP_HOST'])) return false;
 		
-		return $_SERVER['HTTP_HOST'] == $this->developmentHost;
+		return substr($_SERVER['HTTP_HOST'], 0, strlen($this->developmentHost)) == $this->developmentHost;
 	}
 	
 	//actually php5.1 and up also trigger these notifications

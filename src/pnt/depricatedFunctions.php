@@ -55,14 +55,14 @@ function arrayWith(&$value, $key=0) {
 
 function array_assocAddAll(&$addTo, $toAdd) {
 	reset($toAdd);
-	while ( list($key) = each($toAdd) )
-		$addTo[$key] = $toAdd[$key];
+	foreach ($toAdd as $key => $value)
+		$addTo[$key] = $value;
 }
 
 function array_addAll(&$addTo, $toAdd) {
 	reset($toAdd);
-	while ( list($key) = each($toAdd) )
-		$addTo[] = $toAdd[$key];
+    foreach ($toAdd as $value)
+		$addTo[] = $value;
 }
 
 function getBrowser() {
@@ -121,8 +121,8 @@ function objectCopy($obj) {
 	$className = get_class($obj);
 	$copy = new $className();
 	reset($obj);
-	while(list($field) = each($obj))
-		$copy->$field = $obj->$field;
+	foreach ($obj as $field => $value)
+		$copy->$field = $value;
 	return $copy;
 }
 

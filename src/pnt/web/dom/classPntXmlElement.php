@@ -104,22 +104,20 @@ class PntXmlElement extends PntXmlPart {
 		$conv = $this->getConverter();
 		$result = '';
 		reset($atts);
-		while (list($key, ) = each($atts)) {
-			
-			if (is_object($atts[$key])) {							
-				if (($atts[$key]->isAlwaysVisible()) || ($atts[$key]->getContentWith($item)==true)) {
-					
+		foreach ($atts as $key => $att) {
+			if (is_object($att)) {
+				if (($att->isAlwaysVisible()) || ($att->getContentWith($item)==true)) {
 					$result .= ' ';
 					$result .= $key;
 					$result .= '="';
-					$result .= $atts[$key]->getMarkupWith($item);
+					$result .= $att->getMarkupWith($item);
 				} 
 			}
 			else {
 				$result .= ' ';
 				$result .= $key;
 				$result .= '="';
-				$result .= $conv->toHtml($atts[$key]);
+				$result .= $conv->toHtml($att);
 			}
 			$result .= '"';
 		}

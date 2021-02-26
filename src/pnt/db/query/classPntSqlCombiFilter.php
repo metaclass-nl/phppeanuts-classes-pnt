@@ -62,8 +62,8 @@ class PntSqlCombiFilter extends PntSqlFilter {
 	{
 		$parts = array();
 		reset($this->parts);
-		while(list($id) = each($this->parts))
-			$parts[$id] = clone $this->parts[$id];
+		foreach ($this->parts as $id => $part)
+			$parts[$id] = clone $part;
 		$this->parts = $parts;
 	}
 
@@ -79,8 +79,8 @@ class PntSqlCombiFilter extends PntSqlFilter {
 		if ($this->itemType) return $this->itemType;
 		$parts = $this->getParts();
 		if ($parts === null) return null;
-		while (list($key) = each($parts)) {
-			$this->itemType = $parts[$key]->getItemType();
+        foreach ($this->parts as $part) {
+			$this->itemType = $part->getItemType();
 			if ($this->itemType) return $this->itemType;
 		}
 		return null;
@@ -117,22 +117,22 @@ class PntSqlCombiFilter extends PntSqlFilter {
 	function setComparatorId($value) {
 		$this->comparatorId = $value;
 		reset($this->parts);
-		while (list($key) = each($this->parts))
-			$this->parts[$key]->setComparatorId($value);
+        foreach ($this->parts as $part)
+            $part->setComparatorId($value);
 	}
 
 	function setValue1($value) {
 		$this->value1 = $value;
 		reset($this->parts);
-		while (list($key) = each($this->parts))
-			$this->parts[$key]->setValue1($value);
+        foreach ($this->parts as $part)
+            $part->setValue1($value);
 	}
 
 	function setValue2($value) {
 		$this->value2 = $value;
 		reset($this->parts);
-		while (list($key) = each($this->parts))
-			$this->parts[$key]->setValue2($value);		
+        foreach ($this->parts as $part)
+            $part->setValue2($value);
 	}
 
 	/** (Navigational query DSL)

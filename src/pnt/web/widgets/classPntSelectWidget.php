@@ -226,7 +226,7 @@ class PntSelectWidget extends PntFormWidget {
 		$cnv = $this->getConverter();
 		$options = $this->getOptions();
 		reset($options);
-		while (list($key, $content) = each($options)) {
+		foreach ($options as $key => $content) {
 			$selected = $this->getOptionSelected($key);
 			$valueHtml = $cnv->toHtml($key);
 			print "

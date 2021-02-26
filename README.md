@@ -2,23 +2,28 @@
 <P>Version 2.3.0.alpha<BR>
 <BR>
 This library only contains the pnt classes. To use it install phppeanuts-skeleton and follow the instructions in its Readme.md</P>
-
+<BR>
+Documentation: https://www.phppeanuts.org/
+<BR>
 <H3>What's new</H3>
 
 <P>Since 2.2.0</P>
+<UL>
 	<li>Bugs fixed:
 	<ul>
 		<li>validationWarning for integer 0 too short
 		<li>PntStringConverter::sanitizeHtml returned an empty result
 		<li>PntSqlFilter::addParamsTo no longer adds a parameter if no comparator
 		<li>Special signs in image urls caused malformed xml http response
+        <li>Incompatibility with MySQL 5.7.18
+        <li>PntPdoDao::param now returns : in front of placeholder parameter
 	</ul>
 	<li>Other improvements:
 	<ul>
-		<li>PntHttpRequest now allows windows file paths
+		<li>PntHttpRequest now allows windows file paths and Http 2.0
 		<li>Protects file system against potential buffer overflows
 		<li>PntSite adapted to work from the command line
-		<li>tested with PHP 5.5.9, 5.6.11, 7.0.1
+		<li>tested with PHP 5.5.9, 5.6.11, 7.0.1, 7.1, 7.2.24, 7.4.13, 8.0.2
 		<LI>several small changes, see <a href="doc/changes.txt">doc/changes.txt</a>.
 	</ul>
 </UL>

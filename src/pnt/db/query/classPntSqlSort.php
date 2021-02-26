@@ -129,8 +129,8 @@ class PntSqlSort extends PntSqlSpec {
 			$this->filter->set('tableAlias', $alias);
 		
 		reset($this->sortSpecFilters);
-		while (list($key) = each($this->sortSpecFilters)) 
-			$this->sortSpecFilters[$key]->set('tableAlias', $alias);
+		foreach ($this->sortSpecFilters as $filter)
+            $filter->set('tableAlias', $alias);
 	}
 	
 	/** For compatibilty with older versions

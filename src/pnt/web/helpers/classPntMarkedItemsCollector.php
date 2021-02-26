@@ -37,8 +37,7 @@ class PntMarkedItemsCollector {
 		$markedObjects = array(); 
 		$markedOids = $this->getMarkedOids($requestData);
 		$cnv = $this->requestHandler->getConverter();
-		
-		while (list($key, $oid) = each($markedOids) ) {
+		foreach ($markedOids as $oid) {
 			$pos = strPos($oid, '*');
 			$clsName = subStr($oid, 0, $pos);
 			$id = $cnv->fromRequestData( subStr($oid, $pos+1) );
@@ -76,7 +75,7 @@ class PntMarkedItemsCollector {
 		$result = array(); // php may crash if reference to unitialized var is returned
 		$oidParams = $this->getMarkedItemParams($requestData);
 		$patternLength = strLen($this->pattern);
-		while (list($key) = each($oidParams))
+		foreach ($oidParams as $key => $ignoored)
 			$result[] = substr($key, $patternLength, strLen($key) - 3);
 		return $result;
 	}
@@ -89,7 +88,7 @@ class PntMarkedItemsCollector {
 	function getMarkedItemParams($requestData) {
 		$result = array(); // php may crash if reference to unitialized var is returned
 		reset($requestData);
-		while (list($key, $value) = each($requestData))
+		foreach ($requestData as $key => $value)
 			if (strPos($key, $this->pattern) === 0)
 				$result[$key] = $value;
 		return $result;

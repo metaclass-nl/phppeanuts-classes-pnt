@@ -343,7 +343,7 @@ class PntValueValidator {
 		//requires @ with at least one character before, checks the domain name 
 		//not allowing address literals nor comments 
 		if (!preg_match('/^.+' //you may use '/^(?:"(?:\\\\.|[^"])*"|[^ ]+)' if you do not want to  allow whitespace outside double quoted
-			. "@[\w\d-.]+\.\w{2,4}$/" //allows subdomains and numers. "@[\w-]+(\.\w{2,3})*\.\w{2,4}$/" allows no numbers and intends to diallow subdomains (does not for 2/3 letter domains like ibm.com)
+			. "@[\w0-9\-.]+\.\w{2,4}$/" //allows subdomains and numers. "@[\w-]+(\.\w{2,3})*\.\w{2,4}$/" allows no numbers and intends to diallow subdomains (does not for 2/3 letter domains like ibm.com)
 			, $value)) return $this->errorInvalidEmail;
 			
 		//Look up domain name in DNS

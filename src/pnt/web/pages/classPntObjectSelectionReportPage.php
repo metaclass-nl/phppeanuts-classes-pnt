@@ -133,8 +133,7 @@ class PntObjectSelectionReportPage extends PntPage {
 	function getTotalCells($table) {
 		$totalCells = array();
 		reset($table->cells);
-		while (list($key) = each($table->cells)) {
-			$cellText = $table->cells[$key];
+		foreach ($table->cells as $key => $cellText) {
 			$nav = $cellText->getNavigation();
 			if ($nav && $cellText->getContentType() == 'number') {
 				$prop = $nav->getLastProp();
@@ -153,8 +152,7 @@ class PntObjectSelectionReportPage extends PntPage {
 	//nothing different from the original handler, except that we calculate the totals
 	function printItemCells($table, $item, $rowKey=null) {
 		reset($table->cells);
-		while (list($key) = each($table->cells)) {
-			$cell = $table->cells[$key];
+        foreach ($table->cells as $key => $cell) {
 			$onClick = $table->handler_getCellOnClickParam->getCellOnClickParam($table, $item, $key);
 			print "
 			<TD $onClick>";
@@ -181,7 +179,7 @@ class PntObjectSelectionReportPage extends PntPage {
 		$zero = 0;
 		$labelSet = false;
 		reset($table->cells);
-		while (list($key) = each($table->cells)) {
+        foreach ($table->cells as $key => $cellText) {
 			print "
 			<TD>";
 			if (isSet($table->extraCells[$key])) {

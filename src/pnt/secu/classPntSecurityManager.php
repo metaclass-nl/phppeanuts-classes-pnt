@@ -202,15 +202,15 @@ class PntSecurityManager {
 	* and the properties values may be viewed. However, it is more efficient
 	* to check if the object may be viewed only once for each page, therefore
 	* that is not checked here. Getting the properties values
-	* for each multi value property button thakes too much time, 
-	* so for multi value properties only the type is checked
+	* for each multi value property button thkes too much time,
+	* so for multi value properties only the type is checked.
 	*/
 	function checkViewProperty($object, $propDesc) {
 		//if (!Gen::is_a($propDesc, 'PntPropertyDescriptor')) throw new PntError('Bad or no property descriptor');
 		if (!is_subclassOr($propDesc->getType(), 'PntObject')) return null; 
 		
 		$typeClsDesc = PntClassDescriptor::getInstance($propDesc->getType());
-		if ($propDesc->isMultiValue()) {
+		if ($propDesc->isMultiValue() || null === $object) {
 			$values = array();
 		} else {
 			try {

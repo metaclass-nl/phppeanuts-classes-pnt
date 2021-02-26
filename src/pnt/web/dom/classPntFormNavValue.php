@@ -86,7 +86,7 @@ class PntFormNavValue extends PntXmlNavValue {
 	function initConverter($conv) {
 		$nav = $this->getNavigation();
 		$this->initProp($nav->getItemType());
-		$this->converter->initFromProp($this->prop);
+        $conv->initFromProp($this->prop);
 		return $conv;
 	}
 

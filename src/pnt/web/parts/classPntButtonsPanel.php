@@ -47,7 +47,7 @@ class PntButtonsPanel extends PntPagePart {
 
 	function ajaxPrintUpdates($preFix='') {
 		$buttonsList = $this->getButtonsList();
-		while (list($key) = each($buttonsList)) {
+		foreach ($buttonsList as $key => $ignoored) {
 			$this->buttonType = $key;
 			$this->ajaxPrintPartUpdate('ButtonsListPart', $preFix."Buttons$key");
 		}
@@ -62,9 +62,9 @@ class PntButtonsPanel extends PntPagePart {
 				$this->printButtons($buttonsList[$this->buttonType], $this->buttonType);
 		} else {
 			//if no buttontype is set, print all
-			while (list($key) = each($buttonsList)) {
-				$this->printTypeSeparator($key);
-				$this->printButtons($buttonsList[$key], $key);
+            foreach ($buttonsList as $key => $button) {
+                $this->printTypeSeparator($key);
+				$this->printButtons($button, $key);
 			}
 		}
 	}

@@ -130,8 +130,7 @@ class PntObjectSaveAction extends PntAction {
 		$success = true;
 		$ignoreMissing = $this->getReqParam('pntIgnoreMissingFields');
 		//reset($formTexts);
-		while (list($formKey) = each($formTexts)) {
-			$current = $formTexts[$formKey];
+        foreach ($formTexts as $formKey => $current) {
 			if ($this->shouldProcess($current, $formKey)) {
 				$err = $this->checkProcessFormValue($current);
 				if ($err) {
@@ -151,8 +150,7 @@ class PntObjectSaveAction extends PntAction {
 	function commitFormValues(&$formTexts) {
 		$success = true;
 		reset($formTexts);
-		while (list($formKey) = each($formTexts)) {
-			$current = $formTexts[$formKey];
+        foreach ($formTexts as $formKey => $current) {
 			if ($this->shouldProcess($current, $formKey) 
 					&& !Gen::is_a($current, 'PntFormMtoNRelValue')
 					&& !$current->getError()) {

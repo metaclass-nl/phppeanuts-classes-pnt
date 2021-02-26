@@ -379,7 +379,7 @@ class PntPage extends PntRequestHandler {
 		// report all includes that went wrong
 		$params = $this->getPartIncludeTryParams($partName);
 		print "\n<BR>". $this->getName(). " could not include first:\n<BR>";
-		while (list($key, $paramSet) = each($params)) 
+		foreach ($params as $paramSet)
 			print "$paramSet[0], $paramSet[1],\n<BR>";
 		print $filePath;
 	}
@@ -464,7 +464,7 @@ class PntPage extends PntRequestHandler {
 			print $bullet.' $this->print'."$partName();\n";
 			$params = $this->getPartIncludeTryParams($partName);
 			$info = '';
-			while (list($key, $paramSet) = each($params)) {
+            foreach ($params as $paramSet) {
 				$bullet = file_exists("../classes/$paramSet[1]class$paramSet[0].php")
 					? '*' : '-';
 				$info .= "$bullet Gen::tryIncludeClass('$paramSet[0]', '$paramSet[1]');\n"; //printPartDebugComment

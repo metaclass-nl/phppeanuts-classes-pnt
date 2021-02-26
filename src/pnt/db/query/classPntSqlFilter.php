@@ -451,8 +451,8 @@ class PntSqlFilter extends PntSqlSpec {
 		$result = array();
 		$clsDes = $this->getClassDescriptor();
 		$props = $clsDes->getSingleValuePropertyDescriptors();
-		while (list($propName) = each($props))
-			if ($props[$propName]->isFieldProperty() && $props[$propName]->getPersistent() 
+		foreach ($props as $propName => $prop)
+			if ($prop->isFieldProperty() && $prop->getPersistent()
 					&& isSet($this->$propName))
 				$result[$propName] = $this->$propName;
 		$result['clsId'] = $clsDes->getName();
@@ -478,7 +478,7 @@ class PntSqlFilter extends PntSqlSpec {
 	function initFromPersistArray($array) {
 		$clsDes = $this->getClassDescriptor();
 		$props = $clsDes->getSingleValuePropertyDescriptors();
-		while (list($propName) = each($props))
+        foreach ($props as $propName => $prop)
 			if (isSet($array[$propName]) )
 				$this->$propName = $array[$propName];
 

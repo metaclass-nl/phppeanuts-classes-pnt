@@ -157,7 +157,7 @@ class PntHttpRequest {
 		$this->serverVars = $this->validateServerVars($_SERVER); //must be done before getFunkyRequestData
 		$this->cookies = $this->validateGpc($_COOKIE, true);
 		$this->get = $this->validateGpc($this->getFunkyRequestData($funkyAlias)); //does not include cookies
-		$this->post = $this->validateGpc($this->noMagicQuotesGpc($_POST));
+		$this->post = $this->validateGpc($_POST);
 	}
 
 	/** @return validated or eventually sanitized value from $_SERVER or null if not present or sanitation failed
@@ -210,7 +210,7 @@ class PntHttpRequest {
 			if (isSet($pAndQ[1])) 
 				parse_str($pAndQ[1], $requestData); //!adds slashes if magic_quotes_gpc
 		} else { //no uriParam and normal urls or POST
-			$requestData = $this->noMagicQuotesGpc($_GET);
+			$requestData = $_GET;
 			$p = $uri;
 		}
 		if (!$alias) return $requestData;
@@ -237,14 +237,8 @@ class PntHttpRequest {
 	}
 	
 	function noMagicQuotesGpc($data) {
-		if (get_magic_quotes_gpc()) {
-			$result = array();
-			forEach(array_keys($data) as $key)
-			$result[$key] = is_array($data[$key])
-				? $this->noMagicQuotesGpc($data[$key])
-				: stripSlashes($data[$key]);
-			return $result;
-		}
+	    // Removed in PHP 5.4.0., should not be called
+        trigger_error('noMagicQuotesGpc', E_USER_DEPRECATED);
 		return $data;
 	}
 	

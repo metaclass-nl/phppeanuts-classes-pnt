@@ -53,8 +53,7 @@ class PntEditDetailsPart extends PntDetailsPart {
 			return;
 
 		reset($formTexts);
-		while (list($formKey) = each($formTexts)) {
-			$current = $formTexts[$formKey];
+        foreach ($formTexts as $current) {
 			$error = $current->getError();
 			if ($error) {
 				print '<B>';

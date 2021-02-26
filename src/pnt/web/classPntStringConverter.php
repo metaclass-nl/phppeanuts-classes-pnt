@@ -96,7 +96,7 @@ class PntStringConverter extends PntObject {
 		}
 
 		$inputArray = StringConverter::splitDT($string, $format);
-		while (list($key, $value) = each($inputArray)) {
+		foreach ($inputArray as $key => $value) {
 			// check numeric components to be numeric
 			if (strPos($key, 'aADFlMST') === false && !is_numeric($value))
 				return false; 
@@ -176,7 +176,7 @@ class PntStringConverter extends PntObject {
 	*/
 	static function formatDT($dtArray, $format) {
 		$result = $format;
-		while (list($key, $value) = each($dtArray)) 
+        foreach ($dtArray as $key => $value)
 			$result = str_replace($key, $value, $result);
 				
 		return $result;

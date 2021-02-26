@@ -84,9 +84,9 @@ class CasePntHttpRequest extends PntTestCase {
 			, $this->validator->validateServerValue('CONTENT_LENGTH', '-1')
 			, '-1'
 		);
-		Assert::null($this->validator->validateServerValue('CONTENT_LENGTH', PHP_INT_MAX), 'PHP_INT_MAX');
-		Assert::equals('CONTENT_LENGTH too high: '.(PHP_INT_MAX + 1)
-			, $this->validator->validateServerValue('CONTENT_LENGTH', PHP_INT_MAX + 1)
+		Assert::null($this->validator->validateServerValue('CONTENT_LENGTH', 2147483647), 'PHP_INT_MAX on 32 bits');
+		Assert::equals('CONTENT_LENGTH too high: '.(2147483647 + 1)
+			, $this->validator->validateServerValue('CONTENT_LENGTH', 2147483647 + 1)
 			, 'max int + 1'
 		);
 	}
@@ -335,13 +335,10 @@ class CasePntHttpRequest extends PntTestCase {
 	function testValidateSERVER_PROTOCOL() {
 		$name = 'SERVER_PROTOCOL';
 		Assert::null($this->validator->validateServerValue($name, 'HTTP/1.0'), 'HTTP/1.0');
+		Assert::null($this->validator->validateServerValue($name, 'HTTP/2.0'), 'HTTP/2.0');
 		Assert::equals("$name too long: 9"
 			, $this->validator->validateServerValue($name, str_repeat('A', 9))
 			, '9 long'
-		);
-		Assert::equals("$name invalid"
-			, $this->validator->validateServerValue($name, 'HTTP/2.0')
-			, 'HTTX/1.1'
 		);
 		Assert::equals("$name invalid"
 			, $this->validator->validateServerValue($name, 'HTTX/1.0')
@@ -450,8 +447,8 @@ class CasePntHttpRequest extends PntTestCase {
 	}
 	
 	function test_validateCookieName() {
-		$valid = $this->alpahNumeric. '_';
-		$map = array_flip(unpack('C*', $valid. '_'));
+		$valid = $this->alpahNumeric. '_-';
+		$map = array_flip(unpack('C*', $valid));
 		for($i=0; $i<256; $i++) {
 			$name = 'name'. chr($i);
 			if (isSet($map[$i]))
@@ -496,11 +493,12 @@ class CasePntHttpRequest extends PntTestCase {
 			array(
 				'name_underscore' => 'whatever'
 			,	'withDiacriticalSign' => 'kopieëren'
-			,	'withNewline' => "\n" 
-			,	'empty' => '' 
+			,	'withNewline' => "\n"
+			,   'name-dash' => 'value;'
+			,	'empty' => ''
 			), $result, 'validated');
 		
-		Assert::equals(5, count($this->loggedErrors), 'number of logged errors');
+		Assert::equals(4, count($this->loggedErrors), 'number of logged errors');
 			
 		Assert::equals('cookie name', $this->loggedErrors[0][0], '0 key');
 		Assert::equals('cookie name invalid', $this->loggedErrors[0][1], '0 errorMessage');
@@ -512,15 +510,11 @@ class CasePntHttpRequest extends PntTestCase {
 				
 		Assert::equals('cookie name', $this->loggedErrors[2][0], '2 key');
 		Assert::equals('cookie name invalid', $this->loggedErrors[2][1], '2 errorMessage');
-		Assert::equals('name-dash', $this->loggedErrors[2][3], '2 value');
+		Assert::equals('with null'. chr(0). 'byte', $this->loggedErrors[2][3], '2 value');
 		
-		Assert::equals('cookie name', $this->loggedErrors[3][0], '3 key');
-		Assert::equals('cookie name invalid', $this->loggedErrors[3][1], '3 errorMessage');
+		Assert::equals('nameOk', $this->loggedErrors[3][0], '3 key');
+		Assert::equals('nameOk invalid: null byte', $this->loggedErrors[3][1], '3 errorMessage');
 		Assert::equals('with null'. chr(0). 'byte', $this->loggedErrors[3][3], '3 value');
-		
-		Assert::equals('nameOk', $this->loggedErrors[4][0], '4 key');
-		Assert::equals('nameOk invalid: null byte', $this->loggedErrors[4][1], '4 errorMessage');
-		Assert::equals('with null'. chr(0). 'byte', $this->loggedErrors[4][3], '4 value');
 		
 		$this->validator->gpcValidationFatal = true;
 		$e = null;

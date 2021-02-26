@@ -385,8 +385,8 @@ class PntSite extends PntPage {
 			$this->filters = array();
 			if (isSet($_SESSION[$this->getBaseUrl()]['pntGlobalFilters'])) {
 				$filterArrays = $_SESSION[$this->getBaseUrl()]['pntGlobalFilters'];
-				while (list($key) = each($filterArrays)) {
-					$this->filters[$key] = PntSqlFilter::instanceFromPersistArray($filterArrays[$key]);
+				foreach ($filterArrays as $key => $arr) {
+					$this->filters[$key] = PntSqlFilter::instanceFromPersistArray($arr);
 				}
 			}
 		}
@@ -404,8 +404,8 @@ class PntSite extends PntPage {
 
 		$filterArrays = array();
 		reset($filters);
-		while (list($key) = each($filters)) {
-			$filterArrays[$key] = $filters[$key]->getPersistArray();
+		foreach ($filters as $key => $filter) {
+			$filterArrays[$key] = $filter->getPersistArray();
 		}
 		$_SESSION[$this->getBaseUrl()]['pntGlobalFilters'] = $filterArrays;
 	}

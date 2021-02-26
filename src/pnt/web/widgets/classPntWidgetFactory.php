@@ -112,9 +112,10 @@ class PntWidgetFactory {
 		if ($nav->getResultType() == 'email')
 			return $this->getTextWidget($text);
 			
-		$maxLength = $text->prop->getMaxLength();
-		if ($maxLength > $this->getTextAreaTreshold())
-			return $this->getTextAreaWidget($text);
+		$maxLengthPieces = explode(',', $text->prop->getMaxLength());
+		if ($maxLengthPieces[0] > $this->getTextAreaTreshold()) {
+            return $this->getTextAreaWidget($text);
+        }
 		//else
 		return $this->getTextWidget($text);
 	}

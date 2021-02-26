@@ -159,24 +159,12 @@ class PntDbObject extends PntObject {
 	function &initFromData($assocArray, &$fieldMap) {
 		$missingFieldsMap = array();
 		reset($fieldMap);
-		if (get_magic_quotes_runtime()) {
-			while (list($field) = each($fieldMap))
-				if ( isSet( $assocArray[$fieldMap[$field]] ) ) {
-					if (is_string($assocArray[$fieldMap[$field]]))
-						$this->$field = stripSlashes($assocArray[$fieldMap[$field]]);
-					else
-						$this->$field = $assocArray[$fieldMap[$field]]; 
-				} else {
-					$missingFieldsMap[$field] = $fieldMap[$field];
-				}
-		} else {
-			while (list($field) = each($fieldMap)) 
-				if ( isSet( $assocArray[$fieldMap[$field]] ) ) {
-					$this->$field = $assocArray[$fieldMap[$field]];
-				} else {
-					$missingFieldsMap[$field] = $fieldMap[$field];
-				}
-		}
+        foreach ($fieldMap as $field => $column)
+            if ( isSet( $assocArray[$column] ) ) {
+                $this->$field = $assocArray[$column];
+            } else {
+                $missingFieldsMap[$field] = $column;
+            }
 		return $missingFieldsMap;
 	}
 
@@ -194,7 +182,7 @@ class PntDbObject extends PntObject {
 		$insert = $this->isNew();
 
 		reset($tableMap);
-		while (list($tableName) = each($tableMap)) {
+		foreach ($tableMap as $tableName => $ignoored) {
 			$fieldMap = $clsDesc->getFieldMapForTable($tableName);
 			if ($insert || count($fieldMap) > 1)
 				$qh->setQueryToSaveObject_table_fieldMap($this , $tableName, $fieldMap, $insert);
@@ -263,8 +251,7 @@ class PntDbObject extends PntObject {
 		$clsDes = $this->getClassDescriptor();
 		$props = $clsDes->refPropertyDescriptors();
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $prop) {
 			if (!$prop->isMultiValue() && !$prop->getReadOnly())
 				$result[$prop->getName()] = $prop;
 		}
@@ -373,11 +360,11 @@ class PntDbObject extends PntObject {
 			if ($prop->getRecurseDelete()) { 
 				$verify = $prop->getOnDelete() == 'v';
 				$values = $prop->getValueFor($this, false);
-				while (list($key) = each($values)) {
-					if ($verify && !isSet($values[$key]->addingVerifyOnDelete)) {
-						$result[] = $values[$key];
+				foreach ($values as $value) {
+					if ($verify && !isSet($value->addingVerifyOnDelete)) {
+						$result[] = $value;
 					}
-					$values[$key]->addVerifyOnDeleteValues($result, $verify);
+                    $value->addVerifyOnDeleteValues($result, $verify);
 				}
 			}
 		}
@@ -392,7 +379,7 @@ class PntDbObject extends PntObject {
 		$tableMap = $clsDesc->getTableMap();
 
 		reset($tableMap);
-		while (list($tableName) = each($tableMap)) {
+		foreach ($tableMap as $tableName => $ignoored) {
 			$qh->setQueryToDeleteFrom_where_equals(
 				$tableName
 				, $idProp->getColumnName()

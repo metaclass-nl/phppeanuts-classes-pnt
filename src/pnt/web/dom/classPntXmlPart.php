@@ -75,8 +75,8 @@ class PntXmlPart extends PntObject {
 
 	function addElements(&$arr) {
 		reset($arr);
-		while (list($key, ) = each($arr))
-			$this->addElement($arr[$key]);
+		foreach ($arr as $element)
+			$this->addElement($element);
 	}
 
 	/** Must return reference to array so that other methods can add elements */
@@ -99,8 +99,7 @@ class PntXmlPart extends PntObject {
 	{
 		$parts = $this->getParts();
 		if (!empty($parts)) {
-			while (list($key, ) = each($parts)) {
-				$part = $parts[$key];
+		    foreach ($parts as $part) {
 				if (is_object($part))
 					$part->initFrom($this);
 			}
@@ -119,8 +118,7 @@ class PntXmlPart extends PntObject {
 		if (!empty($this->elements)) {
 			$elements = $this->getElements();
 			reset($elements);
-			while (list($key, ) = each($elements)) {
-				$element = $elements[$key];
+			foreach ($elements as $element) {
 				if (is_object($element))
 					$result .= $element->getMarkupWith($item);
 				else

@@ -58,10 +58,17 @@ class PntPdoDao extends PntDao {
 		if ($this->statement && $this->preparedQuery) 
 			$this->statement->closeCursor();
 		$this->error = null;
+        $this->errorInfo = null;
+        $this->result = null;
+
 		if (empty($this->parameters)) {
 			$this->preparedQuery = null;
-			$this->statement = $this->dbSource->query($this->query);
-			$this->result = (boolean) $this->statement;
+			try {
+    			$this->statement = $this->dbSource->query($this->query);
+    			$this->result = (boolean) $this->statement;
+            } catch (PDOException $e) {
+                $this->errorInfo = $e->errorInfo;
+            }
 		} else {
 			//PROBLEM: if : or ? inside quotes, mysql driver tries to bind parameters
 			//  therefore prepared statements must not contain quoted strings
@@ -69,7 +76,11 @@ class PntPdoDao extends PntDao {
 				$this->statement = $this->dbSource->prepare($this->query);
 				$this->preparedQuery = $this->query;
 			}
-			$this->result = $this->statement->execute($this->parameters); //problem: does not work for LIMIT params
+			try {
+                $this->result = $this->statement->execute($this->parameters); //problem: does not work for LIMIT params
+            } catch (PDOException $e) {
+                $this->errorInfo = $e->errorInfo;
+            }
 		}				
 		
 		if ($this->result) {
@@ -78,9 +89,11 @@ class PntPdoDao extends PntDao {
 //printDebug($this);
 		} else {
 			$this->error = $error;
-			$this->errorInfo = $this->statement 
-				? $this->statement->errorInfo() 
-				: $this->dbSource->errorInfo();
+			if (!$this->errorInfo) {
+                $this->errorInfo = $this->statement
+                    ? $this->statement->errorInfo()
+                    : $this->dbSource->errorInfo();
+            }
 			if ($this->errorInfo) {
 				$this->error .= ' '. $this->errorInfo[2];
 				$this->errNo = $this->errorInfo[0];

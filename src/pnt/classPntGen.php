@@ -172,13 +172,18 @@ class PntGen {
 			return "'$value'";
 		if (Gen::is_ofType($value, 'Exception'))
 			return Gen::exceptionToString($value);
-		if ( is_object($value)) { 
-		 	if (method_exists($value, '__toString') )
-		 		 return $value->__toString(); //had trouble with cast not calling __toString()
-			if (method_exists($value, 'toString') )
-				return $value->toString(); //depricated support
-			else		
-				return 'a '.get_class($value);
+		if ( is_object($value)) {
+		    try {
+                if (method_exists($value, '__toString')) {
+                    return $value->__toString();
+                } //had trouble with cast not calling __toString()
+                if (method_exists($value, 'toString')) {
+                    return $value->toString();
+                } //depricated support
+            } catch (Exception $e) {
+		        return get_class($e). ' '. $e->getMessage();
+            }
+			return 'a '.get_class($value);
 		}
 		if (is_array($value)) return 'Array';
 		return (string) $value;
@@ -200,7 +205,8 @@ class PntGen {
 	static function assocsToStrings($array, $max=null) {
 		$result = array();
 		$count = 0;
-		while ( ($max==null || $count <= $max) && (list($key) = each($array)) ) {
+		foreach ($array as $key => $value) {
+		    if ($max!==null && $count > $max) break;
 			$result[] = Gen::valueToString($key).'=>'
 			    . ($max===null ? Gen::toString($array[$key]) : Gen::valueToString($array[$key]) );
 			$count++;
@@ -356,7 +362,7 @@ class PntGen {
 		reset($array);
 		$firstKey = key($array);
 		$dblQf = "$qualifier$qualifier";
-		while (list($key, $value) = each($array)) {
+		foreach ($array as $key=> $value) {
 			if ($key !== $firstKey)
 				$result .= $separator;
 			$result .= $qualifier;
@@ -426,7 +432,7 @@ class PntGen {
 			
 		if (!$propDesc)
 			throw new PntError("$any no propertydescriptor for: $propertyName");
-		while (list($key) = each($arr)) {
+		foreach ($arr as $key => $value) {
 			$value = $propDesc->getValueFor($arr[$key]);
 			$totaal += $value;
 		}

@@ -11,6 +11,13 @@ Gen::includeClass('PntSecurityManager', 'pnt/secu');
 */
 class TestSecurityManager extends PntSecurityManager {
 
+    function checkAccessRef($handler, $request, $scout) {
+        $pntRef = $request->getRequestParam('pntRef');
+        if (null === $pntRef) return null;
+
+        return parent::checkAccessRef($handler, $request, $scout);
+    }
+
 	function checkAccessApp($path) {
 		if (isSet($this->checkAccessApp)) return $this->checkAccessApp;
 		return parent::checkAccessApp($path);

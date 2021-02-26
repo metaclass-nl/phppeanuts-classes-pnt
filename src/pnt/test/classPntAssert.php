@@ -168,7 +168,7 @@ class PntAssert {
 	*/
 	static function ofAnyType($alowedTypes, $toCheck, $label = null) {
 		reset($alowedTypes);
-		while (list($key, $type) = each($alowedTypes))
+		foreach ($alowedTypes as $type)
 			if (Gen::is_ofType($toCheck, $type)) return;
 			
 		Assert::fail('assertOfAnyType', $alowedTypes, $toCheck, $label);
@@ -237,7 +237,7 @@ class PntAssert {
 		
 		$props = $clsDes->getPropertyDescriptors(); 
 		$count=0;
-		while (list($propName) = each($props)) {
+		foreach ($props as $propName => $prop) {
 			Assert::equals(
 				$refObj->get($propName)
 				, $obj->get($propName)

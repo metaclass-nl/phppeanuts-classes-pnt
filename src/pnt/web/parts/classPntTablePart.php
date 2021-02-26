@@ -196,7 +196,7 @@ class PntTablePart extends PntPagePart {
 			$paths = explode(' ', $paths);
 
 		if (!empty($paths))
-			while (list($label, $path) = each($paths) ) 
+		    foreach ($paths as $label => $path)
 				$this->addPropPath($path, $label);
 	}
 
@@ -317,7 +317,7 @@ class PntTablePart extends PntPagePart {
 	*/
 	function printTableHeaders($table) {
 		reset($table->headers);
-		while (list($key, $label) = each($table->headers)) {
+		foreach ($table->headers as $key => $label) {
 			$sortParams = isSet($table->headerSortParams[$key]) ? $table->headerSortParams[$key] : '';
 			print "
 			<TD class=pntIth$sortParams>$label</TD>"; //sortParms and labels are HTML
@@ -377,7 +377,7 @@ class PntTablePart extends PntPagePart {
 	function printItemCells($table, $item, $rowKey=null) {
 		$type=$this->getType(); //is checked to be alphaNumeric
 		reset($table->cells);
-		while (list($key) = each($table->cells)) {
+		foreach ($table->cells as $key => $cell) {
 			$cell = $table->cells[$key];
 			$onClick = $table->handler_getCellOnClickParam->getCellOnClickParam($table, $item, $key);
 			print "\n			<td class=\"";

@@ -287,7 +287,7 @@ class PntRequestHandler {
 	 */
 	function getHandlersTriedString($attempted) {
 		$result = "<TABLE>\n";
-		while(list($key, $params) = each($attempted))
+		foreach ($attempted as $params)
 			$result .= "<TR><TD class=pntNormal>$params[1]$params[0]</TD></TR>\n";
 		$result .= "</TABLE>\n";
 		return $result;

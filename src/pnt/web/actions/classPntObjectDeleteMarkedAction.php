@@ -36,8 +36,8 @@ class PntObjectDeleteMarkedAction extends PntAction {
 				$success = !$this->checkAccess();
 			}
 			if ($success) {
-				while (list($key, ) = each($marked) ) {
-					$this->errors = array_merge($this->errors, $this->getDeleteErrorMessagesFrom($marked[$key]) );
+			    foreach ($marked as $value) {
+					$this->errors = array_merge($this->errors, $this->getDeleteErrorMessagesFrom($value) );
 				}
 			}
 			// we COULD delete the objects that had no errors and redirect,
@@ -139,8 +139,8 @@ class PntObjectDeleteMarkedAction extends PntAction {
 
 	function deleteObjects() {
 		reset($this->object);
-		while (list($key) = each($this->object) ) {
-			$result = $this->deleteObject($this->object[$key]);
+		foreach ($this->object as $each) {
+			$result = $this->deleteObject($each);
 			if (Gen::is_a($result, 'PntError'))
 				$this->errors[] = $result->getLabel();
 		}

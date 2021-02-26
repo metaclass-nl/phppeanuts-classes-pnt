@@ -173,7 +173,7 @@ class PntTabsPart extends PntPagePart {
 		print "$varName = new Array(";
 		reset($this->tabsSpec);
 		$sep = '';
-		while (list($key, $name) = each($this->tabsSpec)) {
+		foreach ($this->tabsSpec as $name) {
 			print $sep;
 			print "'$myName$name'";
 			$sep = ', ';
@@ -191,7 +191,7 @@ class PntTabsPart extends PntPagePart {
 	*/
 	function printTabBar() {
 		reset($this->tabsSpec);
-		while (list($key, $name) = each($this->tabsSpec)) {
+        foreach ($this->tabsSpec as $key => $name) {
 			$label = is_string($key) ? $key : $name;
 			$this->handler_printTabDiv->printTabDiv($this, $this->getName().$name, $label);
 		}
@@ -215,7 +215,7 @@ class PntTabsPart extends PntPagePart {
 	/** prints all content parts */
 	function printContent() {
 		reset($this->tabsSpec);
-		while (list($key, $name) = each($this->tabsSpec)) {
+        foreach ($this->tabsSpec as $key => $name) {
 			$label = is_string($key) ? $key : $name;
 			$this->printContentDivPart($name, $label);
 		}

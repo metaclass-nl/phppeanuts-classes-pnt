@@ -74,8 +74,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		if (empty($props))
 			return $result;
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if ($prop->isFieldProperty() && $prop->getPersistent())
 				$result[$name] = $prop;
 		}
@@ -87,8 +86,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 	function getPersistentValuePropertyDescriptors() {
 		$result = array(); // anwsering reference to unset var may crash php
 		$props = $this->getPersistentFieldPropertyDescriptors();
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if (!$prop->isIdProperty())
 				$result[$name] = $prop;
 		}
@@ -102,8 +100,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		if (empty($props))
 			return $result;
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if ($prop->isDerived()
 					&& $prop->getPersistent() 
 					&& ($idProp = $prop->getIdPropertyDescriptor())
@@ -187,8 +184,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 			return $this->fieldMap;
 
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			$this->fieldMap[$prop->getName()] = $prop->getColumnName();
 		}
 		return $this->fieldMap;
@@ -207,8 +203,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		$this->fieldMapPrefixed = array();
 		$props = $this->getPersistentFieldPropertyDescriptors();
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			$this->fieldMapPrefixed[$prop->getName()] = $prop->getTableName(). '.'. $prop->getColumnName();
 		}
 		return $this->fieldMapPrefixed;
@@ -230,8 +225,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 			return $fieldMap;
 
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if (($prop->getTableName() == $tableName || $prop->getName() == 'id')
 					&& ($prop->getPersistent() !== PNT_READ_ONLY))
 				$fieldMap[$prop->getName()] = $prop->getColumnName();
@@ -281,9 +275,9 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		$filter->set('key', "All $type".'fields');
 		$filter->set('itemType', $this->getName());
 		$filter->set('valueType', $type);
-		while (list($key) = each($filters))
-			if (!$type || $filters[$key]->getValueType() == $type)
-				$filter->addPart($filters[$key]);
+		foreach ($filters as $key => $part)
+			if (!$type || $part->getValueType() == $type)
+				$filter->addPart($part);
 
 		return $filter;
 	}
@@ -296,8 +290,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		Gen::includeClass('PntSqlFilter', 'pnt/db/query');
 
 		$props = $this->getPersistentFieldPropertyDescriptors();
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if ($prop->getVisible()) {
 				$filter = new PntSqlFilter();
 				$filter->set('key', $name);
@@ -319,8 +312,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		if ($depth < 2) return $result;
 
 		$props = $this->getPersistentRelationPropertyDescriptors();
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if (!$prop->isMultiValue())
 				$this->addReferenceFilters($result, $prop, $depth);
 		}
@@ -341,9 +333,9 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 		
 		$relatedClsDesc = PntClassDescriptor::getInstance($prop->getType());
 		$relatedFilters = $relatedClsDesc->getDefaultFilters($depth - 1);
-		while (list($key) = each($relatedFilters)) {
+		foreach ($relatedFilters as $key => $relatedFilter) {
 			$copy = clone $filter;
-			$copy->setNext($relatedFilters[$key]);
+			$copy->setNext($relatedFilter);
 			$result[$copy->getId()] = $copy;
 		}
 	}
@@ -364,8 +356,7 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 	function getVerifyOnDelete() {
 		$props =& $this->refPropertyDescriptors();
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if ($prop->isMultiValue() && $prop->getVerifyOnDelete()) 
 				return true;
 		}

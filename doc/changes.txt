@@ -69,3 +69,21 @@ PntErrorHandler::printDebugInfo now uses StringConverter to convert to html
 Debugging
 - PntPdoDao::param now returns : in front of placeholder parameter
 - PntAssert moved includeClass PntAssertionFailure to ::fail
+--------------------------------------------
+Adaptation to php7
+- StringConverterTest now uses &apos;
+Unit tests and 64 bits
+- CasePntHttpRequest::testValidateCONTENT_LENGTH replaced PHP_INT_MAX
+---------------------------------------
+@branche php80
+Easier upgrading
+- PntErrorHandler::getDefaultReportingLevel report NOTICE but not DEPRICATED
+Debugging
+- PntGen::valueToString now catches exceptions
+Adaptation to php 7.2-8.0:
+- replace list() = each() by foreach
+- implode(): Passing glue string after array is deprecated
+- get_magic_quotes_gpc() is deprecated (ini setting Removed in PHP 5.4.0.)
+- get_magic_quotes_runtime() is deprecated (ini setting Removed in PHP 5.4.0.)
+- PntPdoDao::_runQuery not catches PDOException
+- PntWidgetFactory::getDetailsFormWidget now explodes maxLenght

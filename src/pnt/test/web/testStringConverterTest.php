@@ -618,7 +618,7 @@ class StringConverterTest extends PntTestCase {
 		 $this->cnv->setHtml_version_ent('ENT_XHTML');
 		 $br = "<br />";
 		Assert::equals(
-			"brackets: ()&lt;&gt;[]{} quotes: &#039;&quot;`^ accented: ιλο \f$br\n&amp;\t\v     more: ,.!;?+-*/=\\|"
+			"brackets: ()&lt;&gt;[]{} quotes: &apos;&quot;`^ accented: ιλο \f$br\n&amp;\t\v     more: ,.!;?+-*/=\\|"
 			, $this->cnv->toHtml($label, true)
 			, 'breaksForLineFeeds XML'
 		);

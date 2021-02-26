@@ -44,9 +44,7 @@ class PntHorSelReportPage extends ObjectSelectionReportPage {
 	function printItemCells($table, $cell, $rowKey=null) {
 		$items = $table->getItems();
 		reset($items);
-		while (list($key) = each($items)) {
-			$item = $items[$key];
-
+		foreach ($items as $item) {
 			$onClick = $table->getCellOnClickParam($table, $item);
 			print "
 			<TD $onClick "; 

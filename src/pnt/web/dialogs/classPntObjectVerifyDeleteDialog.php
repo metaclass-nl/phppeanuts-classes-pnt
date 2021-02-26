@@ -67,10 +67,10 @@ class PntObjectVerifyDeleteDialog extends ObjectVerifyDeletePage {
 		$this->getDeleteErrorMessages();
 
 		//if errors, stille needed to allow the SecurityManager to check viewing (errors about) the objects
-		reset($this->markedObjects); 
-		while (list($key) = each($this->markedObjects)) {
-			$this->object[] = $this->markedObjects[$key];
-			$this->markedObjects[$key]->addVerifyOnDeleteValues($this->object);
+		reset($this->markedObjects);
+		foreach ($this->markedObjects as $key => $obj) {
+			$this->object[] = $obj;
+            $obj->addVerifyOnDeleteValues($this->object);
 		}
 
 		return $this->object;
@@ -110,8 +110,8 @@ class PntObjectVerifyDeleteDialog extends ObjectVerifyDeletePage {
 		$this->errorMessages = array();
 		$this->initMarkedObjects();
 		reset($this->markedObjects);
-		while (list($key) = each($this->markedObjects)) {
-			$this->errorMessages = array_merge($this->errorMessages, $this->markedObjects[$key]->getDeleteErrorMessages());
+        foreach ($this->markedObjects as $obj) {
+			$this->errorMessages = array_merge($this->errorMessages, $obj->getDeleteErrorMessages());
 		}
 		return $this->errorMessages;
 	}

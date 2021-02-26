@@ -132,7 +132,7 @@ class PntDao {
 	function prefixColumnNames($colNames, $prefix) {
 		$result = array();
 		reset($colNames);
-		while (list($key, $name) = each($colNames)) 
+		foreach ($colNames as $key => $name)
 			$result[$key] = "$prefix.$name";
 		return $result;
 	}
@@ -185,7 +185,7 @@ class PntDao {
 	function joinAllById($tableMap, $baseTable) {
 		$sql = '';
 		reset($tableMap);
-		while (list($table) = each($tableMap))
+		foreach ($tableMap as $table => $ignoored)
 			if ($table != $baseTable)
 				$sql .= "\n INNER JOIN $table ON $table.id = $baseTable.id";
 		$this->query .= $sql;
@@ -197,8 +197,8 @@ class PntDao {
 		$sql = " ($columnName IN (";
 		reset($values);
 		$multi = false;
-		while (list($key, $value) = each($values)) {
-			if ($multi) $sql .= ', '; 
+		foreach ($values as $key => $value) {
+			if ($multi) $sql .= ', ';
 			else $multi = true;
 			$sql .= $this->convertConditionArgumentToSql($value);
 		}

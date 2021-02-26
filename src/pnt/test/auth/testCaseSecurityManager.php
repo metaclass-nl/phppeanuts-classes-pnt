@@ -14,7 +14,7 @@ class CaseSecurityManager extends PntTestCase {
 	public $obj1;
 	
 	function setUp() {
-		$this->sm = new TestSecurityManager('no baseUrl');
+		$this->sm = new TestSecurityManager('no baseUrl', 'testTokenSalt');
 		$this->obj = new PntObject();
 		$this->clsDesObj = PntClassDescriptor::getInstance('PntObject');
 		$this->propsObj = new TestPropsObject(1234);
@@ -196,7 +196,9 @@ class CaseSecurityManager extends PntTestCase {
 		Assert::equals('TestPropsObject', $this->sm->checkSelectProperty($values, $this->clsDesPropsObj, 'ignored'), 'name of classDescriptor from object');
 	}
 
-
+	function testCheckAccessRef() {
+		#TODO
+	}
 }
 
 ?>

@@ -298,9 +298,9 @@ class PntNavigation extends PntEvaluation {
 		$maxLength = 0;
 		$maxKeyLength = 0;
 		$navResults = array();
-		while (list($key) = each($array)) {
+		foreach ($array as $key => $value) {
 			try {
-				$navResult = $nav->evaluate($array[$key]);
+				$navResult = $nav->evaluate($value);
 			} catch (PntError $err) {
 				throw new PntReflectionError('nav1Sort can not retrieve sortKey', 0, $err);
 			}
@@ -314,8 +314,7 @@ class PntNavigation extends PntEvaluation {
 		// build array with keys by concatenating navigation results and original keys,
 		// both paddes up to the length of the longest with spaces. Padd strings right and numbers left.
 		$result = array();
-		while (list($key) = each($navResults)) {
-			$navResult = $navResults[$key];
+		foreach ($navResults as $key => $navResult) {
 			if (is_string($navResult))
 				$just = STR_PAD_RIGHT;
 			else

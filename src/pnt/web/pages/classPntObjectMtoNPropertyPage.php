@@ -93,8 +93,7 @@ class PntObjectMtoNPropertyPage extends PntObjectPropertyPage {
 	*/
 	function printBooleanProps() {
 		$formTexts = $this->getFormTexts();
-		while (list($formKey) = each($formTexts)) {
-			$current = $formTexts[$formKey];
+		foreach ($formTexts as $formKey => $current) {
 			if (!$current->isReadOnly()) {
 				$nav =  $current->getNavigation();
 				if ($nav->getResultType() == 'boolean') {

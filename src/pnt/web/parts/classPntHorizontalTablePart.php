@@ -59,8 +59,7 @@ class PntHorizontalTablePart extends PntTablePart {
 		
 		$items = $table->getItems();
 		reset($items);
-		while (list($key) = each($items)) {
-			$item = $items[$key];
+		foreach ($items as $item) {
 			$table->handler_printItemSelectCell->printItemSelectCell($item);
 		}
 		
@@ -69,9 +68,8 @@ class PntHorizontalTablePart extends PntTablePart {
 	
 	function printRows($table) {
 		reset($table->cells);
-		while (list($key) = each($table->cells)) {
-			$cell = $table->cells[$key];
-			$this->printRow($table, $cell, $key);		
+		foreach ($table->cells as $key => $cell) {
+			$this->printRow($table, $cell, $key);
 		}
 	}
 
@@ -100,9 +98,7 @@ class PntHorizontalTablePart extends PntTablePart {
 	function printItemCells($table, $cell, $rowKey=null) {
 		$items = $table->getItems();
 		reset($items);
-		while (list($key) = each($items)) {
-			$item = $items[$key];
-
+		foreach ($items as $item) {
 			$onClick = $table->getCellOnClickParam($table, $item);
 			print "
 			<TD $onClick "; 

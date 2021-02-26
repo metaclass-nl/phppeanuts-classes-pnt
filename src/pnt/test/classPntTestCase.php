@@ -64,7 +64,7 @@ class PntTestCase {
 		$this->tests = array();
 		$methods = get_class_methods(get_class($this));
 
-		while (list($key, $methodName) = each($methods))
+		foreach ($methods as $methodName)
 			if (strPos($methodName, 'test') === 0 && $methodName != get_class($this))
 				$this->addNewTestFor($methodName);
 	}

@@ -10,8 +10,13 @@ Gen::includeClass('PntTestCase', 'pnt/test');
 class PntDepricatedTest extends PntTestCase {
 
 	function testDepricated() {
-		//only works in 5.3.0 and above
-		split('x', '');
+		//only works in 7.2-4
+		$this->assertTrue(function_exists('each'), 'function each required for this test');
+		if (!function_exists('each')) return;
+
+        $arr = [1];
+		each($arr);
+
 	}
 	
 	function testUserDepricated() {

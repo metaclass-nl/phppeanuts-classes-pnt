@@ -107,8 +107,7 @@ class PntDetailsPart extends PntPagePart {
 		$exclMulti = $this->getExcludedMultiValuePropButtonKeys();
 		$formTexts = $this->getFormTexts();
 		reset($formTexts);
-		while (list($formKey) = each($formTexts)) {
-			$current = $formTexts[$formKey];
+		foreach ($formTexts as $formKey => $current) {
 			//only print row for MtoNDialogWidget if no multi value property button
 			if (Gen::is_a($current, 'PntFormMtoNRelValue') && !isSet($exclMulti[$formKey])) continue;
 			if ($current->isReadOnly() == $readOnly) {

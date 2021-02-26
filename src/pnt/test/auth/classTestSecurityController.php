@@ -12,11 +12,15 @@ class TestSecurityController extends Site {
 	public $accessDeniedError;
 	
 	function __construct($dir) {
-		//do not call parent contructors
+		//do not call parent constructors
 		$this->setDir($dir);
 		$this->setDomainDir($dir);
 		$this->initConverter();
 		$this->initScout();
+
+		Gen::includeClass('ErrorHandler');
+		$this->errorHandler = new ErrorHandler();
+		$this->initHttpRequest();
 	}
 	
 	function accessDenied($handler, $errorMessage) {

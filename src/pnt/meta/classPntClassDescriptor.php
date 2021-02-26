@@ -94,23 +94,18 @@ class PntClassDescriptor extends PntDescriptor {
 		$result = array(); // anwering reference to unset var may crash php
 		$props =& $this->refPropertyDescriptors();
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+		foreach ($props as $name => $prop) {
 			if ($prop->isMultiValue())
 				$result[$name] = $prop;
 		}
 		return( $result );
-		
-		//forEach no good with objects: it allways copies them
-		//so does list($name, $prop)
 	}
 
 	function getSingleValuePropertyDescriptors() {
 		$result = array(); // anwering reference to unset var may crash php
 		$props =& $this->refPropertyDescriptors();
 		reset($props);
-		while (list($name) = each($props)) {
-			$prop = $props[$name];
+        foreach ($props as $name => $prop) {
 			if (!$prop->isMultiValue())
 				$result[$name] = $prop;
 		}
@@ -139,10 +134,10 @@ class PntClassDescriptor extends PntDescriptor {
 	function getTwinOf_type($propName, $type)
 	{
 		$props = $this->getMultiValuePropertyDescriptors();
-		while (list($key) = each($props)) {
-			if ( $props[$key]->getTwinName() == $propName
-					&&  is_subclassOr($type, $props[$key]->getType()) )
-				return $props[$key];
+		foreach ($props as $key => $prop) {
+			if ( $prop->getTwinName() == $propName
+					&&  is_subclassOr($type, $prop->getType()) )
+				return $prop;
 		}
 	}
 
@@ -231,9 +226,9 @@ class PntClassDescriptor extends PntDescriptor {
 	{
 		$result = array();
 		$props = $this->getSingleValuePropertyDescriptors();
-		while (list($name) = each($props)) {
-			if ($props[$name]->getVisible())
-				$result[$name] = $props[$name];
+        foreach ($props as $name => $prop) {
+			if ($prop->getVisible())
+				$result[$name] = $prop;
 		}
 		return $result;
 	}
@@ -255,9 +250,8 @@ class PntClassDescriptor extends PntDescriptor {
 	function getDefaultLabelProp($candidates, $reject) {
 		if (isSet($this->defaultLabelProp)) return $this->defaultLabelProp;
 		reset($candidates);
-		while (list($name) = each($candidates)) {
+        foreach ($candidates as $name => $prop) {
 			if (array_search($name, $reject) || substr($name, -2) == 'Id') continue;
-			$prop = $candidates[$name];
 			if ($prop->isFieldProperty() && $prop->getVisible())
 				return $this->defaultLabelProp = $prop;
 		}

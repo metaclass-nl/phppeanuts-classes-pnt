@@ -60,7 +60,7 @@ class PntMultiPropsPart extends PntPagePart {
 		$names = $this->getMultiPropNames();
 		reset($names);
 		$sm = $this->controller->getSecurityManager();
-		while (list($key, $name) = each($names)) {
+		foreach ($names as $name) {
 			$prop = $clsDes->getPropertyDescriptor($name);
 			if ($prop === null)
 				trigger_error("Property not found: $name", E_USER_ERROR);
@@ -74,7 +74,7 @@ class PntMultiPropsPart extends PntPagePart {
 	function getSubsaveActions() {
 		$names = $this->getMultiPropNames();
 		$result = array();
-		while (list($key, $name) = each($names)) {
+        foreach ($names as $name) {
 			$part=$this->getPropertyPart($name);
 			$result = array_merge($result, $part->getSubsaveActions());
 		}

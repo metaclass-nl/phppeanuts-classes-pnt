@@ -383,7 +383,8 @@ class PntMultiValuePropertyDescriptor extends PntDerivedPropertyDescriptor {
 	/** @return boolean Wheather delete should recursively delete values
 	*/
 	function getRecurseDelete() {
-		return strPos('dv', $this->getOnDelete()) !== false;
+	    $onDelete = $this->getOnDelete();
+		return $onDelete !== null && strPos('dv', $onDelete) !== false;
 	}
 	
 	/** @return boolean Wheather the user interface should verify

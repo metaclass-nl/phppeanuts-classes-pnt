@@ -20,7 +20,7 @@ class CaseHandlerSecurity extends PntTestCase {
 	
 	function setUp() {
 		$this->req = array('pntType' => 'TestDbObject');
-		$this->sm = new TestSecurityManager('no baseUrl');
+		$this->sm = new TestSecurityManager('no baseUrl', 'testTokenSalt');
 		$this->testContr = new TestSecurityController('pnt/test/db'); //assigning by value gives anomaly in php4
 		$this->testContr->controller = $this->testContr;
 		$this->testContr->securityManager = $this->sm;

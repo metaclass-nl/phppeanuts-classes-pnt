@@ -30,7 +30,7 @@ class CaseDbObject extends PntTestCase {
 		$mth = 'getCreateTableSql'.$qh->getDbmsName();
 		$qh->query = pntCallStaticMethod('CaseDbObject', $mth);
 		$qh->runQuery();
-		$this->assertNull($qh->getError(),'create table testdbobjects');	
+		$this->assertNull($qh->getError(),'create table testdbobjects');
 	}
 
 	static function getCreateTableSqlmysql() {

@@ -189,7 +189,7 @@ class PntObjectSearchPage extends PntObjectIndexPage {
 	
 	function setTableHeaderSortParams($table) {
 		reset($table->headers);
-		while (list($key, $label) = each($table->headers)) {
+		foreach ($table->headers as $key => $label) {
 			$nav = $table->cells[$key]->getNavigation();
 			$paths = $nav->getDbSortPaths(); //obtain paths from meta data
 			$table->addHeaderSortParams($key, $this->getHeaderSortParams($paths));
