@@ -1,5 +1,5 @@
 <H2>Release notes</H2>
-<P>Version 2.3.0.alpha<BR>
+<P>Version 2.3.0<BR>
 <BR>
 This library only contains the pnt classes. To use it install phppeanuts-skeleton and follow the instructions in its Readme.md</P>
 <BR>
