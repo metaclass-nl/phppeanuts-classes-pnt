@@ -37,7 +37,7 @@ class PntIndex {
 	}
 	
 	function at($key) {
-		if (!$this->includesKey($key)) return null;
+		if (!$this->includesKey($key)) return [];
 		return $this->contentArrays[$key];
 	}
 	

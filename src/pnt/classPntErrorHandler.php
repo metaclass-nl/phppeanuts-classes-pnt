@@ -33,8 +33,11 @@ class PntErrorHandler {
 	public $stringConverter;
 	public $developmentHost = 'development';
 	public $emailAddress;
-//	public $debugInfoBacktrace = true; defaults to $this->isDevelopment() if not set
-	public $logBacktrace = false;  
+	public $debugInfoBacktrace; // = true; defaults to $this->isDevelopment() if not set
+	public $logBacktrace = false;
+    public $loggingLevel;
+    public $errorExceptionLevel;
+    public $oldExceptionHandler;
 
 	/** @param String $logFilePath if null the error info is written to the php's system logger,
 	* @see http://www.php.net/manual/en/function.error-log.php
@@ -318,13 +321,12 @@ class PntErrorHandler {
 		if (!$type || is_subclassOr($type, 'PntErrorException'))
 			$type = $this->mapErrorLevel($levelOrCode);
 		print "<br />\n<B>$type:</B> '";
-        $cnv = $this->getStringConverter();
-		print $cnv->toHtml($message);
+		print htmlspecialchars($message, ENT_QUOTES);
 		print "' in <B>$filePath</B><BR>\nat line <B>$lineNumber</B>";
 		if (!$this->hasHandledError) {
 			print "<BR>Request params: <BR>\n";
 			forEach(Gen::assocsToStrings($this->getRequestData(false)) as $assoc)
-				print $cnv->toHtml(stripSlashes($assoc)). ", \n";
+				print htmlspecialchars(stripSlashes($assoc), ENT_QUOTES). ", \n";
 		}
 		print "<br />\n";
 		if (isSet($this->debugInfoBacktrace)) {
@@ -368,6 +370,7 @@ class PntErrorHandler {
 	}
 
 	function isPntFile($filePath) {
+        if ($filePath===null) return false;
 		$classDir = realpath('../classes/pnt');
 		$testDir = realpath('../classes/pnt/test');
 		return strPos($filePath, $classDir) === 0 

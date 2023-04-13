@@ -20,7 +20,7 @@ class PntObjectTest extends PntTestCase {
 	function test_getClassDescriptor() {
 		$this->assertNotNull($this->clsDes);
 		
-		$this->clsDes->undefinedField = true;
+		$this->clsDes->label = 'label for testing';
 		$this->assertSame(
 			$this->clsDes
 			, $this->obj1->getClassDescriptor()

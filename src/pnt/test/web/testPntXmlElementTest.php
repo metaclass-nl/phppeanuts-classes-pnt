@@ -8,6 +8,9 @@ Gen::includeClass('PntTestCase', 'pnt/test');
 class PntXmlElementTest extends PntTestCase {
 	
 	public $root;
+	public $part1;
+	public $part1Text;
+	public $part2;
 	
 	function setUp() {
 		Gen::includeClass('PntXmlElement', 'pnt/web/dom');

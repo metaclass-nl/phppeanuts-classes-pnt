@@ -87,3 +87,66 @@ Adaptation to php 7.2-8.0:
 - get_magic_quotes_runtime() is deprecated (ini setting Removed in PHP 5.4.0.)
 - PntPdoDao::_runQuery not catches PDOException
 - PntWidgetFactory::getDetailsFormWidget now explodes maxLenght
+committed, pushed 26-2-2021
+-------------------------------
+Adaptation to PHP 8.0:
+- PntDbObject__construct now checks $id to be numeric
+Adaptation to PHP 8.1 and 8.2
+- PntIndex::at now returns empty array instead of null
+- Added #[\AllowDynamicProperties] to
+    . PntObject,
+    . PntRequestHandler,
+    . test/auth TestSecurityManager
+- declared missing properties in
+    . PntHttpRequest
+    . PntErrorHandler
+    . PntPdoDao
+    . PntDbClassDescriptor
+    . PntClassDescriptor
+    . PntObjectNavigation
+    . PntNoAuthenticator
+    . PntMarkedItemsCollector
+    . PntWidgetFactory
+    . PntHttpRequest
+    . PntError
+    . PntErrorException
+    . PntErrorHandler
+    . PntValueValidator
+    . PntMultiValuePropertyDescriptor
+    . test/auth CaseHandlerSecurity
+    . test/db CaseDbObject
+    . test/db CaseDbPolymorhic
+    . test/db CaseSqlCombiFilter
+    . test/db SqlFilterTest
+    . test/db SqlJoinFilterTest
+    . test/db SqlSortTest
+    . test/meta ClassDescriptorTest
+    . test/meta PntPropertyDesctriptorTest
+    . test/web CasePntHttpRequest
+    . test/web PntXmlElementTest
+    . test PntErrorTest
+    . test PntObjectTest
+- should not do str_replace on null:
+    . PntComparator
+    . PntSqlFilter
+    . PntStringConverter
+- should not do explode on null: PntFormMtoNRelValue
+- should not do strpos on null:
+    . PntShortLink
+- should not do substr on null:
+    . PntPage
+    . PntPropertyPart
+- should not do trim on null: PntFilterFormPart
+- should not do strlen on null: PntStringConverter, PntValueValidator
+- should not do strpos on null: PntErrorHandler
+- should not do urlencode on null: PntStringConverter
+- should not do class_exists on null: PntRequestHandler
+- should not do htmlspecialchars on null: PntStringConverter
+- added convenience functions substr and strlen and urlEncode to PntGen
+Bug fixes:
+- E_NOTiCE missing key: SqlFilterTest
+- ValueValidator not yet included: PntErrorHandler
+- adapted to different line endings: SqlSortTest
+Corrected Readme
+comitted 13-4-2024
+--------------------------------------

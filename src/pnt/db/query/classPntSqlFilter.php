@@ -349,6 +349,9 @@ class PntSqlFilter extends PntSqlSpec {
 		$qh = $this->getQueryHandler();
 		$comparator = $this->get('comparator');
 		$columnName = $this->getColumnName();
+        if ($columnName===null) {
+            $columnName = '';
+        }
 		$sql = str_replace('$columnName', $columnName, $sql);
 		$sql = str_replace(
 			'$value1',

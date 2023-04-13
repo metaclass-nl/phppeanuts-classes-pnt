@@ -9,6 +9,10 @@ class CaseSqlCombiFilter extends PntTestCase {
 	public $dbObjectTest;
 	public $clsDes;
 	public $obj1;
+	public $filter1;
+	public $filter2;
+	public $qh;
+	public $combiFilter;
 
 	function setUp() {
 		Gen::includeClass('TestDbSub', 'pnt/test/db');

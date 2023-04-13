@@ -14,6 +14,7 @@ Gen::includeClass('PntValidationException', 'pnt/secu');
 /** Abstract superclass of all http request handlers.
 * @package pnt/web
 */
+#[\AllowDynamicProperties]
 class PntRequestHandler {
 
 	/** PntRequestHandler $whole from which this is be a part */
@@ -480,7 +481,7 @@ class PntRequestHandler {
 			return $this->object;
 
 		$type = $this->getType();
-		if (!class_exists($type)) return null;
+		if (!$type || !class_exists($type)) return null;
 
 		$cnv = $this->getConverter();
 		$id = $cnv->fromRequestData( $this->getRequestParam('id') );

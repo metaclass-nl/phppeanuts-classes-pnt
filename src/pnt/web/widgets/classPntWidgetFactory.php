@@ -27,6 +27,8 @@ class PntWidgetFactory {
 	public $textAreaTreshold = 120;
 	public $dialogTreshold = 30;
 	public $widgetDir = 'widgets';
+    public $page;
+    public $object;
 	
 	function __construct($page) {
 		$this->page = $page;

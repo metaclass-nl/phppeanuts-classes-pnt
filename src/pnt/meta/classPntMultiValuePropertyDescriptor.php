@@ -20,6 +20,7 @@ class PntMultiValuePropertyDescriptor extends PntDerivedPropertyDescriptor {
 	public $twinName;
 	public $derivationPath;
 	public $onDelete;
+    public $derivationNav;
 
 	function isMultiValue() {
 		return true;

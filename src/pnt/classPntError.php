@@ -23,6 +23,7 @@ class PntError extends Exception {
 	
 	public $origin;
 	public $cause;
+    public $debugTrace;
 	
 	function __construct($message="" , $code=0, $previous=NULL) {
 		if (method_exists($this, 'getPrevious')) {

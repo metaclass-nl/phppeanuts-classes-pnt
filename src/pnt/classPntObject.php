@@ -20,6 +20,7 @@ Gen::includeClass('PntMultiValuePropertyDescriptor', 'pnt/meta');
 * @abstract
 * @package pnt
 */
+#[\AllowDynamicProperties]
 class PntObject {
 
 	/**
@@ -190,7 +191,7 @@ class PntObject {
 	/** get the value of the property with the specified name
 	 * @param string $propertyName the name by which a PntPropertyDescriptor can be obtained from ::getPropertyDescriptor
 	 * @param PntSqlFilter $filter to apply, or null if unfiltered (currently only used by multi value properties)
-	 * @return mixed dynmically typed by the PropertyDescriptor>>type
+	 * @return mixed dynamically typed by the PropertyDescriptor>>type
 	 * @throws PntError if property missing, derivation fails, or anything an evetial getter method throws 
 	 */
 	function get($propertyName, $filter=true) {

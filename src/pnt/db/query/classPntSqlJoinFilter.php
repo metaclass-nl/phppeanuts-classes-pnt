@@ -358,7 +358,7 @@ class PntSqlJoinFilter extends PntSqlFilter {
 		
 	function getSortSubSelect($names, $nextSql, $sortByColumnName, $joins, $extraWhere) {
 		return "(SELECT $sortByColumnName FROM $names[nextTableName] $names[nextTableAlias] $joins
-	WHERE $names[nextIdColumn] = $nextSql $extraWhere LIMIT 1)";
+    WHERE $names[nextIdColumn] = $nextSql $extraWhere LIMIT 1)";
 	}
 	
 	function initDefaultNext() {

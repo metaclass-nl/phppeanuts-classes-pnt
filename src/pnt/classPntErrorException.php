@@ -16,7 +16,9 @@ Gen::includeClass('PntError', 'pnt');
  * @package pnt
  */
 class PntErrorException extends PntError {
-	
+
+    public $severity;
+
 	 function __construct($message, $code, $level, $filePath, $lineNumber) {
 	 	parent::__construct($message, $code);
 	 	$this->severity = $level;

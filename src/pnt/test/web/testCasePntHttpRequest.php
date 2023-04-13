@@ -9,7 +9,8 @@ class CasePntHttpRequest extends PntTestCase {
 	
 	public $validator;
 	public $alpahNumeric = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-	
+    public $loggedErrors;
+
 	function setUp() {
 		$logger = $this;
 //		global $site;

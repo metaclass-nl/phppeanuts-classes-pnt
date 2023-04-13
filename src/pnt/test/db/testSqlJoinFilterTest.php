@@ -10,6 +10,9 @@ class SqlJoinFilterTest extends PntTestCase {
 	public $dbObjectTest;
 	public $clsDes;
 	public $obj1;
+	public $filter1;
+	public $filter2;
+	public $qh;
 
 	function setUp() {
 		Gen::includeClass('TestDbSub', 'pnt/test/db');

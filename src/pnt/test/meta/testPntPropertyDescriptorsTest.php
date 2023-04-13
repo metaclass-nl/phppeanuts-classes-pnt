@@ -32,7 +32,7 @@ class PntPropertyDescriptorsTest extends PntTestCase {
 			$undefined
 			, 'undefined');
 		
-		$prop->undefinedField = 'not empty';
+		$prop->label = 'not empty';
 		$this->assertSame(
 			$prop
 			, $this->clsDes->getPropertyDescriptor('derived1')

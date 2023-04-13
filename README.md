@@ -1,5 +1,5 @@
 <H2>Release notes</H2>
-<P>Version 2.3.0.alpha<BR>
+<P>Version 2.4.0.alpha<BR>
 <BR>
 This library only contains the pnt classes. To use it install phppeanuts-skeleton and follow the instructions in its Readme.md</P>
 <BR>
@@ -7,24 +7,20 @@ Documentation: https://www.phppeanuts.org/
 <BR>
 <H3>What's new</H3>
 
-<P>Since 2.2.0</P>
+<P>Since 2.3.0</P>
 <UL>
 	<li>Bugs fixed:
 	<ul>
-		<li>validationWarning for integer 0 too short
-		<li>PntStringConverter::sanitizeHtml returned an empty result
-		<li>PntSqlFilter::addParamsTo no longer adds a parameter if no comparator
-		<li>Special signs in image urls caused malformed xml http response
-        <li>Incompatibility with MySQL 5.7.18
-        <li>PntPdoDao::param now returns : in front of placeholder parameter
+      <li>E_NOTCE missing key: SqlFilterTest</li>
+      <li>ValueValidator not yet included: PntErrorHandler</li>
 	</ul>
 	<li>Other improvements:
 	<ul>
-		<li>PntHttpRequest now allows windows file paths and Http 2.0
-		<li>Protects file system against potential buffer overflows
-		<li>PntSite adapted to work from the command line
-		<li>tested with PHP 5.5.9, 5.6.11, 7.0.1, 7.1, 7.2.24, 7.4.13, 8.0.2
-		<LI>several small changes, see <a href="doc/changes.txt">doc/changes.txt</a>.
+		<li>No longer passes null to string functions</li>
+        <li>Either declares all member variables or #[\AllowDynamicProperties] </li>
+		<li>added conveniece functions substr and strlen to PntGen</li>
+		<li>tested with PHP 7.2.24, 8.0.2, 8.1.17, 8.2.4</li>
+		<Ll>more details and small changes see <a href="doc/changes.txt">doc/changes.txt</a></li>
 	</ul>
 </UL>
 
@@ -36,7 +32,6 @@ of src/pnt from this library</p>
 <p>
 
 <H3>Known bugs and limitations</H3>
-
 <OL>
 	<li>UTF-8 not supported
 	<li>Applications are only protected against cross frame scripting in browsers that support the X-Frame-Options header. 
@@ -47,7 +42,6 @@ of src/pnt from this library</p>
 	problems and solutions with the use of other databases. (Known: Oracle versions below 9 do not support standard
 	explicit JOIN syntax, but producing JOIN instuctions is not delegated to DAO objects and can not be easily refactored
 	to do so.)
-	<li>The AGPL license requires you to make the source of applications using this version
-	of phpPeanuts available to any users outside your own organization, and allow them forward
-	it to the rest of the world. 
+	<li>The AGPL license requires you to license the source of applications using this version
+	of phpPeanuts under the AGPL license. 
 </OL>

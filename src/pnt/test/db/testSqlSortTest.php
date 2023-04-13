@@ -10,6 +10,11 @@ class SqlSortTest extends PntTestCase {
 	public $dbObjectTest;
 	public $clsDes;
 	public $obj1;
+	public $filter1;
+	public $filter2;
+	public $filter3;
+	public $qh;
+	public $sort1;
 
 	function setUp() {
 		Gen::includeClass('TestDbSub', 'pnt/test/db');
@@ -42,12 +47,12 @@ class SqlSortTest extends PntTestCase {
 	function test_getExtraSelectExpressions() {
 		$filter4 = PntSqlFilter::getInstance('TestDbObject', 'anotherDbObject.testDbObject.doubleField');
 		$this->sort1->addSortSpecFilter($filter4);
-		$this->assertEquals("
+		$this->assertEquals(str_replace(["\n", "\r", "\t", "   "], "", "
 	, (SELECT AL_1.stringField FROM testdbobjects AL_1 
-	WHERE AL_1.id = testdbobjects.anotherDbObjectId  LIMIT 1) AS pntSort1
+    WHERE AL_1.id = testdbobjects.anotherDbObjectId  LIMIT 1) AS pntSort1
 	, (SELECT AL_3.doubleField FROM testdbobjects AL_2 \n     JOIN testdbobjects AS AL_3 ON AL_2.testDbObjectId = AL_3.id
-	WHERE AL_2.id = testdbobjects.anotherDbObjectId  LIMIT 1) AS pntSort2"
-			, $this->sort1->getExtraSelectExpressions()
+    WHERE AL_2.id = testdbobjects.anotherDbObjectId  LIMIT 1) AS pntSort2")
+			, str_replace(["\n", "\r", "\t", "   "], "", $this->sort1->getExtraSelectExpressions())
 			, "getExtraSelectExpressions");
 	}
 	
@@ -205,12 +210,12 @@ class SqlSortTest extends PntTestCase {
 		$this->sort1->addSortSpec('testDbSub.doubleField', 'ASC');
 		$this->sort1->addSortSpec('testDbSub.subOnlyStringField', 'ASC');
 
-		$this->assertEquals('
-	, (SELECT AL_1.doubleField FROM testdbobjects AL_1 
-	WHERE AL_1.id = testdbsubs.testDbSubId  LIMIT 1) AS pntSort1
-	, (SELECT AL_2.subOnlyStringField FROM testdbsubs AL_2 
-	WHERE AL_2.id = testdbsubs.testDbSubId  LIMIT 1) AS pntSort2'
-			, $this->sort1->getExtraSelectExpressions()
+		$this->assertEquals(str_replace(["\n", "\r"], " ", '
+, (SELECT AL_1.doubleField FROM testdbobjects AL_1 
+WHERE AL_1.id = testdbsubs.testDbSubId  LIMIT 1) AS pntSort1
+, (SELECT AL_2.subOnlyStringField FROM testdbsubs AL_2 
+WHERE AL_2.id = testdbsubs.testDbSubId  LIMIT 1) AS pntSort2')
+			, str_replace(["\n", "\r", "\t", "   "], " ", $this->sort1->getExtraSelectExpressions())
 			, "getExtraSelectExpressions");
 		$this->assertEquals(
 			'testdbsubs.subOnlyStringField ASC, pntSort1 ASC, pntSort2 ASC'
@@ -223,10 +228,10 @@ class SqlSortTest extends PntTestCase {
 		$this->sort1 = new PntSqlSort('test_dbsub', 'TestDbSub');
 		$this->sort1->addSortSpec('multiSubs.doubleField');
 		
-		$this->assertEquals("
-	, (SELECT AL_2.doubleField FROM testdbsubs AL_1 \n     JOIN testdbobjects AS AL_2 ON AL_1.id = AL_2.id
-	WHERE AL_1.testDbSubId = testdbsubs.id  LIMIT 1) AS pntSort1"
-			, $this->sort1->getExtraSelectExpressions()
+		$this->assertEquals(str_replace(["\n", "\r"], " ","
+, (SELECT AL_2.doubleField FROM testdbsubs AL_1 \n JOIN testdbobjects AS AL_2 ON AL_1.id = AL_2.id
+WHERE AL_1.testDbSubId = testdbsubs.id  LIMIT 1) AS pntSort1")
+			, str_replace(["\n", "\r", "\t", "   "], " ", $this->sort1->getExtraSelectExpressions())
 			, "getExtraSelectExpressions");
 	}	
 	

@@ -213,7 +213,7 @@ class PntPropertyPart extends PntPagePart {
 	}
 
 	function getSpecificPartPrefix($partName=null) {
-		if (subStr($partName, 0, 5) == 'Table')
+		if (Gen::subStr($partName, 0, 5) == 'Table')
 			return $this->getPropertyType();
 			
 		return parent::getSpecificPartPrefix($partName);

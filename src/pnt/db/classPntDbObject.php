@@ -30,7 +30,7 @@ class PntDbObject extends PntObject {
 	function __construct($id=0) {
 		parent::__construct();
 		$this->id = 0;
-		if ($id>0) {
+		if (is_numeric($id) && $id>0) {
 			$this->loadData($id);	
 		}
 	}

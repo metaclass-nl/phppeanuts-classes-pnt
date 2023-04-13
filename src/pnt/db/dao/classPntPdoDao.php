@@ -32,7 +32,14 @@ class PntPdoDao extends PntDao {
 	public $parameters;
 	/** PDOStatement Prepared statement */
 	public $statement;
+    public $dbSource;
 	public $preparedQuery;
+    public $error;
+    public $errorInfo;
+    public $result;
+    public $errNo;
+    public $rowIndex;
+    public $columnsMeta;
 	
 	function __construct($connection=null) {
 		$this->parameters = array();

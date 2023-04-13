@@ -105,7 +105,9 @@ class PntFormMtoNRelValue extends PntFormNavValue {
 		$this->converter = clone $this->getConverter(); 
 		$this->converter->initFromProp($this->prop);
 
-		$labels = explode(';', $this->contentLabel);
+		$labels = $this->contentLabel===null
+            ? []
+            : explode(';', $this->contentLabel);
 
 		$this->content = array();
 		$this->error = null;

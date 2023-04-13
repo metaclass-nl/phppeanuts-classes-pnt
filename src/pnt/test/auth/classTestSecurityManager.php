@@ -9,6 +9,7 @@ Gen::includeClass('PntSecurityManager', 'pnt/secu');
 * with the same name as the method, if it is not set, call the parent implementation.
 * @package pnt/test/auth
 */
+#[\AllowDynamicProperties]
 class TestSecurityManager extends PntSecurityManager {
 
     function checkAccessRef($handler, $request, $scout) {

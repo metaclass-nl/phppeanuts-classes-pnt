@@ -452,7 +452,7 @@ class PntFilterFormPart extends PntPagePart {
 		$fv1 = $this->getFilterValue1ForInit($filter, $num);
 		if ($addWildcards && in_array($filter->get('comparatorId'), array('LIKE', 'NOT LIKE'))
 				&& $filter->get('valueType') == 'string')
-			$fv1 = $this->addWildcards(trim($fv1));
+			$fv1 = $this->addWildcards(trim("$fv1"));
 		
 		//may have to include valueType class
 		$lastFilter = $filter->getLast();

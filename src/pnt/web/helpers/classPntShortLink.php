@@ -42,6 +42,7 @@ class PntShortLink {
 	}
 	
 	function searchInit($value, $startPos) {
+        if ($value===null) return null;
 		$this->position = strPos($value, '[~', $startPos);
 		if ($this->position === false) return null;
 		

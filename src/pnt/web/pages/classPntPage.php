@@ -43,8 +43,9 @@ class PntPage extends PntRequestHandler {
 	function getInfoStyle() {
 		if ($this->infoStyle)
 			return $this->infoStyle;
-			
-		if (subStr($this->getInformation(), 0, 2) == 'OK')
+
+        $info = $this->getInformation();
+		if ($info!==null && subStr($info, 0, 2) == 'OK')
 			return $this->getInfoStyleOk();
 			
 		return 'pntInfo';

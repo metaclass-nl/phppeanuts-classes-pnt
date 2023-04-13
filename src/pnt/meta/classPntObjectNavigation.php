@@ -25,6 +25,8 @@ Gen::includeClass('PntNavigation', 'pnt/meta');
 */
 class PntObjectNavigation extends PntNavigation {
 
+	public $stepResultType;
+
 	/** @throws PntReflectionError */
 	static function getPropIncludeType($key, $itemType) {
 		$clsDes = PntClassDescriptor::getInstance($itemType);

@@ -16,8 +16,17 @@ Gen::includeClass('PntFormMtoNRelValue', 'pnt/web/dom');
 */
 class CaseHandlerSecurity extends PntTestCase {
 	
-	public $obj1;
-	
+	public $obj;
+	public $req;
+	public $sm;
+	public $testContr;
+	public $clsDesObj;
+	public $propsObj;
+	public $clsDesPropsObj;
+	public $propDes;
+	public $caseDbObj;
+
+
 	function setUp() {
 		$this->req = array('pntType' => 'TestDbObject');
 		$this->sm = new TestSecurityManager('no baseUrl', 'testTokenSalt');

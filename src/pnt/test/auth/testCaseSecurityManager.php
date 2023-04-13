@@ -10,8 +10,13 @@ Gen::includeClass('TestSecurityManager', 'pnt/test/auth');
 * @package pnt/test/auth
 */
 class CaseSecurityManager extends PntTestCase {
-	
-	public $obj1;
+
+	public $sm;
+	public $obj;
+	public $clsDesObj;
+	public $propsObj;
+	public $clsDesPropsObj;
+	public $propDes;
 	
 	function setUp() {
 		$this->sm = new TestSecurityManager('no baseUrl', 'testTokenSalt');

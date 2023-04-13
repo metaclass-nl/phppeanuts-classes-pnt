@@ -143,6 +143,8 @@ class PntComparator extends PntIdentifiedOption {
 	}
 	
 	function sqlFromValue($value) {
+        if ($value===null)
+            return null;
 		if ($this->id == 'LIKE' || $this->id == 'NOT LIKE')
 			return str_replace('*', '%', $value);
 			

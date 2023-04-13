@@ -20,7 +20,7 @@ class PntGen {
 	/** Returns phpPeanuts version identifier 
 	@return String */
 	static function getPntVersion() {
-		return "2.3.0.alpha";
+		return "2.4.0.alpha";
 	}
 	
 	/** Tries to include a class whose file name follows the pnt class file name rule:
@@ -542,7 +542,25 @@ class PntGen {
 		if ($incl) return $value >= $ref;
 		return $value > $ref;
 	}
-	
+
+    static function substr($string, $offset, $length=null) {
+        if ($string===null) {
+            if ($offset!=0) return false;
+            return "";
+        }
+        return substr($string, $offset, $length);
+    }
+
+    static function strlen($string) {
+        if ($string===null) return 0;
+        return strlen($string);
+    }
+
+    static function urlEncode($string) {
+        if ($string===null) return '';
+        return urlEncode($string);
+    }
+
 } // END OF CLASS PntGen --------------------------------------------------
 
 /** The following are not moved to PntGen nor depricated */
@@ -569,7 +587,7 @@ if (version_compare(phpversion(), '5.0.3', '<')) {
 } else {
 	function is_subclassOr($childClassName, $parentClassName) { 
 		if ($childClassName == $parentClassName) return true;
-		if(!class_exists($childClassName))return false;
+		if($childClassName===null || !class_exists($childClassName))return false;
 		return is_subclass_of($childClassName, $parentClassName);
 	}	
 }

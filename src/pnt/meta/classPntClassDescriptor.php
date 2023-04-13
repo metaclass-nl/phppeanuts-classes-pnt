@@ -22,6 +22,7 @@ class PntClassDescriptor extends PntDescriptor {
 
 	public $propertyDescriptors; 
 	public $name;
+    public $defaultLabelProp;
 
 	/** @param String $name Should not be null!
 	*/
@@ -33,7 +34,7 @@ class PntClassDescriptor extends PntDescriptor {
 	/** Must return a reference to the array so that ohter method can add instances */
 	static function &getInstances() {
 		static $instances;
-		return($instances);
+		return $instances;
 	}
 
 	/** Returns the PntClassDescriptor for the spefied class.
@@ -67,9 +68,7 @@ class PntClassDescriptor extends PntDescriptor {
 
 	function isPropertyDescriptorSet($propertyName) {
 		//answer wheater the propertyDescriptor with the given name has been added already
-		$prop = $this->propertyDescriptors[$propertyName];
-		//if ($prop) print '<BR> set: '.$prop;
-		return( isSet($prop) );
+		return( isSet($this->propertyDescriptors[$propertyName]) );
 	}
 
 	function getPropertyDescriptors() {

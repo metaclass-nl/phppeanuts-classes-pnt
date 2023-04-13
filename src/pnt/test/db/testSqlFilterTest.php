@@ -11,6 +11,8 @@ class SqlFilterTest extends PntTestCase {
 	public $dbObjectTest;
 	public $clsDes;
 	public $obj1;
+    public $filter1;
+    public $qh;
 
 	function setUp() {
 		Gen::includeClass('TestDbSub', 'pnt/test/db');
@@ -314,14 +316,14 @@ class SqlFilterTest extends PntTestCase {
 		
 		global $site;
 		$filters = $site->getGlobalFilters();
-		$this->assertNotNull($filters[0], "should fail first time, succeed second, fail third, etc");
-		if ($filters[0])
+		$this->assertTrue(isSet($filters[0]), "should fail first time, succeed second, fail third, etc");
+		if (isSet($filters[0]))
 			$this->assertEquals(
 				$this->filter1->get('sql')
 				, $filters[0]->get('sql')
 				, "global filter from session");
 		
-		if ($filters[0]) {
+		if (isSet($filters[0])) {
 			unSet($filters[0]);
 			$site->setGlobalFilters($filters);
 			print "cleared global filter";

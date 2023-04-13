@@ -11,6 +11,7 @@ class PntErrorTest extends PntTestCase {
 	public $obj1Message = 'message of original error';
 	public $obj2;
 	public $obj2Message = 'message of resulting error';
+	public $obj3;
 	
 	
 	function setUp() {

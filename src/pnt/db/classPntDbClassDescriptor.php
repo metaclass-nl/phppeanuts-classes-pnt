@@ -32,6 +32,9 @@ class PntDbClassDescriptor extends PntClassDescriptor {
 	public $fieldMap;
 	public $peanutsById;
 	public $polyClassesAllowed;
+	public $labelSort;
+	public $tableMap;
+	public $fieldMapPrefixed;
 
 	function __construct($name) {
 		parent::__construct($name);

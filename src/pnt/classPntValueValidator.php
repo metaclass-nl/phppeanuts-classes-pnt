@@ -40,6 +40,7 @@ class PntValueValidator {
 	public $maxValue;
 	public $minLength;
 	public $maxLength;
+    public $decimal;
 	
 	
 	/** @return String the character encoding of domain model strings.
@@ -363,7 +364,7 @@ class PntValueValidator {
 	{
 		if ($this->minLength==null) $this->minLength=0;
 		if ($this->maxLength==null) $this->maxLength=$this->getInfiniteBig();
-		$len = strlen($value);
+		$len = $value===null ? 0 : strlen($value);
 		if ($len < $this->minLength) 
 			return $this->errorTooShort.$this->minLength;
 		if ($len > $this->maxLength)

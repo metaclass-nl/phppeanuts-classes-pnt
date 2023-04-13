@@ -24,6 +24,7 @@ class PntNoAuthenticator {
 	public $footprintsLimit = 30;
 	public $baseUrl;
 	public $tokenSalt;
+    public $hsalg;
 	
 	function __construct($baseUrl, $tokenSalt) {
 		$this->baseUrl = $baseUrl;

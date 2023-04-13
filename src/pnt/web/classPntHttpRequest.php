@@ -122,7 +122,12 @@ class PntHttpRequest {
 	* the rest of this file is copyright (c) MetaClass, 2012  */ 
 	
 	public $sessionIdCp = ',\-'; //to be overridden if non-standard session ids are used
-	
+    public $logger;
+    public $gpcCharset;
+    public $nullChar;
+    public $validServerVars;
+    public $error;
+
 	/** 
 	 * @param PntErrorHandler $logger error logger
 	 * @param String $gpcCharset the encoding of GET, POST, COOKIE (and Authentication?) data

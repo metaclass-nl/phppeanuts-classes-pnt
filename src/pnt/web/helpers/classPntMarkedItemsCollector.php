@@ -18,6 +18,8 @@ class PntMarkedItemsCollector {
 	
 	/** The pattern used to recognize marked item parameter keys */
 	public $pattern = '*!@';
+
+    public $requestHandler;
 	
 	/** Constructor. 
 	* @param PntRequestHandler requestHandler

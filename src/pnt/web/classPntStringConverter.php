@@ -255,6 +255,7 @@ class PntStringConverter extends PntObject {
 	* @return String with HTML */
 	function toHtml($string, $breaksForLineFeeds=false, $preformatAndTab=0) {		
 		if ($this->type=='html') return $string;
+        if ($string===null) return '';
 		$result = htmlspecialchars($string, ENT_QUOTES | $this->html_version_flag, $this->getLabelCharset());
 		if ($breaksForLineFeeds) {
 			$br = $this->html_version_ent=='ENT_XML1' || $this->html_version_ent=='ENT_XHTML'
@@ -273,6 +274,7 @@ class PntStringConverter extends PntObject {
 	 * WARNING: This implementation is NOT OK for UTF-8 and other multi byte charsets!
 	 * 		if you use those, you must override this method on StringConverter)*/
 	function toJsLiteral($string, $quote="'") {
+        if ($string==null) return $quote.$quote;
 	    return $quote. str_replace(
 	    	array('\\'  , '<'     , '>'     , "\r" , "\n" , '"'    ,"'"     , '&'    ), 
 	    	array("\\\\", "\\x3C" , "\\x3E" , "\\r", "\\n", "\\x22", "\\x27", "\\x26"), 
@@ -284,6 +286,7 @@ class PntStringConverter extends PntObject {
 	 *   if you use those, you may need to override this method on StringConverter)
 	 *   check the PHP documentation of urlencode to see what to do for the character set you want to use.*/
 	function urlEncode($string) {
+        if ($string===null) return '';
 		return urlencode($string);
 	}
 	
@@ -432,7 +435,7 @@ class PntStringConverter extends PntObject {
 
 	function convert($string) 
 	{
-		if (strlen($string) == 0)
+		if ($string === null || strlen($string) == 0)
 			return $this->emptyToInfinity ? ValueValidator::getInfinity($this->type) : null;
 			
 		$this->error = null;

@@ -10,6 +10,7 @@ class CaseDbObject extends PntTestCase {
 	public $incremental = true;  	
 	public $obj1;
 	public $childObj1;
+	public $clsDes;
 	
 	function setUp() {
 		$this->clsDes = PntClassDescriptor::getInstance('TestDbObject');

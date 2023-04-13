@@ -12,7 +12,10 @@ class CaseDbPolymorphic extends PntTestCase {
 	
 	public $obj1;
 	public $childObj1;
-	public $incremental = true;  	
+	public $incremental = true;
+	public $clsDes;
+	public $parentClsDes;
+	public $caseDbObj;
 	
 	function setUp() {
 		$this->clsDes = PntClassDescriptor::getInstance('TestDbSub');

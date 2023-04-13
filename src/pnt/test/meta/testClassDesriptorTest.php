@@ -18,6 +18,17 @@ class ClassDesriptorTest extends PntTestCase {
 		
 	}
 
+	function test_label() {
+		$this->assertNull($this->desc1->label, 'field');
+		$this->assertEquals($this->desc1Name, $this->desc1->getLabel(), 'getter');
+
+		$this->desc1->setLabel('label of One');
+		$this->assertEquals('label of One', $this->desc1->getLabel(), 'setter');
+
+		$this->desc1->setLabel(null);
+		$this->assertEquals($this->desc1Name, $this->desc1->getLabel(), 'set to null');
+	}
+
 	function test_getInstance() {
 		
 		$arr = PntClassDescriptor::getInstances();
@@ -26,13 +37,13 @@ class ClassDesriptorTest extends PntTestCase {
 			,'instances');
 		
 		$desc2 = PntClassDescriptor::getInstance($this->desc1Name);
-		$this->desc1->temp1 = 'aValue';
-		$this->assertNotNull($this->desc1->temp1, 'same var'); 
+		$this->desc1->label = 'aValue';
+		$this->assertNotNull($this->desc1->label, 'same var');
 		$this->assertSame($this->desc1, $desc2, 'same instance');
 		
 		$desc3 = PntClassDescriptor::getInstance('PntObject');
 		$this->assertNotSame($this->desc1, $desc3, 'PntObject');
-		
+		$this->desc1->label = null;
 	}
 
 	function test_name() {
@@ -40,17 +51,6 @@ class ClassDesriptorTest extends PntTestCase {
 		$this->assertEquals($this->desc1Name, $this->desc1->getName(), 'getter');
 	}
 
-	function test_label() {
-		$this->assertNull($this->desc1->label, 'field');
-		$this->assertEquals($this->desc1Name, $this->desc1->getLabel(), 'getter');
-		
-		$this->desc1->setLabel('label of One');
-		$this->assertEquals('label of One', $this->desc1->getLabel(), 'setter');
-		
-		$this->desc1->setLabel(null);
-		$this->assertEquals($this->desc1Name, $this->desc1->getLabel(), 'set to null');
-	}
-	
 	function test_getDefaultLabelProp() {
 		$prop = $this->desc1->getDefaultLabelProp($this->desc1->refPropertyDescriptors(), array());
 		$this->assertNotNull($prop, 'desc1');
